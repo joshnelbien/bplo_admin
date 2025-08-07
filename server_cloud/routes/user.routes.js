@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../models"); // ✅ Add this to access sequelize
+const db = require("../models");
 
 // Test DB connection route
-router.get("/", async (req, res) => {
+router.get("/test", async (req, res) => {
   try {
     await db.sequelize.authenticate();
     res.json({ success: true, message: "✅ Connected to Supabase DB!" });

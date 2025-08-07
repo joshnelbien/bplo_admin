@@ -25,7 +25,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 
-db.Test = require("./userApplication")(sequelize, Sequelize);
+db.User = require("./newApplication")(sequelize, Sequelize);
 
 
 module.exports = db;

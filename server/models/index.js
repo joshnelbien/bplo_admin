@@ -12,5 +12,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require("./usersApplication")(sequelize, DataTypes);
+db.renew = require("./renewApplication")(sequelize, DataTypes);
 
 module.exports = db;

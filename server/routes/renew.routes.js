@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-const User = db.user;
+const Renew = db.renew;
 
 
 
 //test insert bplo new forms
 router.post("/", async (req, res) => {
   try {
-    const newUser = await User.create(req.body);
-    res.status(201).json({ message: "Form submitted successfully", user: newUser });
+    const renew = await Renew.create(req.body);
+    res.status(201).json({ message: "Form submitted successfully", renew: renew });
   } catch (error) {
     console.error("Insert Error:", error);
     res.status(500).json({ error: "Failed to submit form" });
@@ -22,12 +22,12 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const users = await db.user.findAll({
+    const renews = await db.renew.findAll({
     });
-    res.json(users);
+    res.json(renews);
   } catch (error) {
     console.error("Fetch error:", error);
-    res.status(500).json({ error: "Failed to fetch users" });
+    res.status(500).json({ error: "Failed to fetch renews" });
   }
 });
 

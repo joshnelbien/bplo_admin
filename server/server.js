@@ -9,6 +9,9 @@ app.use(express.json());
 app.use("/users", require("./routes/user.routes"));
 app.use("/api/forms", require("./routes/user.routes"));
 
+app.use("/renew", require("./routes/renew.routes"));
+app.use("/api/renew", require("./routes/renew.routes"));
+
 
 // Connect to DB and sync
 db.sequelize.sync().then(() => {
