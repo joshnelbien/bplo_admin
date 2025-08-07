@@ -7,6 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/users", require("./routes/user.routes"));
+app.use("/api/forms", require("./routes/user.routes"));
 
 
 // Connect to DB and sync

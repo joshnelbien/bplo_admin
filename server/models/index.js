@@ -11,8 +11,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("./user.model")(sequelize, DataTypes);
-db.user = require("./test")(sequelize, DataTypes);
 db.user = require("./usersApplication")(sequelize, DataTypes);
 
 module.exports = db;
