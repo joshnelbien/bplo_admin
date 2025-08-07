@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import Side_bar from '../SIDE_BAR/side_bar';
 import Nav from '../NAV/nav';
+import Side_bar from '../SIDE_BAR/side_bar';
 import './new_records.css';
 
 function New_records() {
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPageButtons, setMaxPageButtons] = useState(window.innerWidth <= 600 ? 7 : 10);
+    const [selectedApplicant, setSelectedApplicant] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const recordsPerPage = 20;
 
-    // Simulated 200 records
-    const applicants = Array.from({ length: 1000 }, (_, i) => ({
+    const applicants = Array.from({ length: 25 }, (_, i) => ({
         id: i + 1,
+        businessName: `Business Name${i + 1}`,
         firstName: `First${i + 1}`,
         lastName: `Last${i + 1}`,
         age: 20 + (i % 10),
@@ -21,7 +23,6 @@ function New_records() {
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
     const currentRecords = applicants.slice(indexOfFirstRecord, indexOfLastRecord);
 
-    // Watch for window resize to update maxPageButtons
     useEffect(() => {
         const handleResize = () => {
             setMaxPageButtons(window.innerWidth <= 600 ? 7 : 10);
@@ -53,6 +54,16 @@ function New_records() {
         }
     };
 
+    const openModal = (applicant) => {
+        setSelectedApplicant(applicant);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setSelectedApplicant(null);
+        setIsModalOpen(false);
+    };
+
     return (
         <>
             <Nav />
@@ -64,6 +75,7 @@ function New_records() {
                     <thead>
                         <tr>
                             <th>Applicant ID</th>
+                            <th>Business Name</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Age</th>
@@ -71,8 +83,9 @@ function New_records() {
                     </thead>
                     <tbody>
                         {currentRecords.map((applicant) => (
-                            <tr key={applicant.id}>
+                            <tr key={applicant.id} onClick={() => openModal(applicant)} style={{ cursor: 'pointer' }}>
                                 <td>{applicant.id}</td>
+                                <td>{applicant.businessName}</td>
                                 <td>{applicant.firstName}</td>
                                 <td>{applicant.lastName}</td>
                                 <td>{applicant.age}</td>
@@ -82,13 +95,7 @@ function New_records() {
                 </table>
 
                 <div className="pagination">
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    >
-                        Prev
-                    </button>
-
+                    <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Prev</button>
                     {getPageNumbers().map((page) => (
                         <button
                             key={page}
@@ -98,15 +105,23 @@ function New_records() {
                             {page}
                         </button>
                     ))}
-
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                    >
-                        Next
-                    </button>
+                    <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
                 </div>
             </div>
+
+            {isModalOpen && selectedApplicant && (
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h3>Applicant Details</h3>
+                        <p><strong>ID:</strong> {selectedApplicant.id}</p>
+                        <p><strong>Business Name:</strong> {selectedApplicant.businessName}</p>
+                        <p><strong>First Name:</strong> {selectedApplicant.firstName}</p>
+                        <p><strong>Last Name:</strong> {selectedApplicant.lastName}</p>
+                        <p><strong>Age:</strong> {selectedApplicant.age}</p>
+                        <button onClick={closeModal}>Close</button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

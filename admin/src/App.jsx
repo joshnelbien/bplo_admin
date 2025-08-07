@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Dashboard from './DASHBOARD/dashboard'
 import New_records from './NEW_RECORDS/new_records'
-import Renew_records from './RENEW_RECORDS/renew_records'
 import Profile from './PROFILE/profile'
+import Renew_records from './RENEW_RECORDS/renew_records'
 
 function App() {
 

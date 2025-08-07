@@ -1,7 +1,7 @@
+import { useState } from "react";
 import Nav from "../NAV/nav";
 import Side_bar from "../SIDE_BAR/side_bar";
 import "./profile.css";
-import { useState } from "react";
 
 function Profile() {
   const [activeTab, setActiveTab] = useState("personal");
@@ -23,11 +23,11 @@ function Profile() {
             <div className={`profile-type-indicator ${
               activeTab === "personal" ? "profile-type-personal" :
               activeTab === "business" ? "profile-type-business" :
-              "profile-type-government"
+              "profile-type-attachments"
             }`}>
               {activeTab === "personal" ? "Personal Profile" :
                activeTab === "business" ? "Business Profile" :
-               "Government Profile"}
+               "attachments Profile"}
             </div>
 
             {/* Profile Stats */}
@@ -66,10 +66,10 @@ function Profile() {
               Business Profile
             </button>
             <button 
-              className={`profile-tab ${activeTab === "government" ? "active" : ""}`}
-              onClick={() => setActiveTab("government")}
+              className={`profile-tab ${activeTab === "attachments" ? "active" : ""}`}
+              onClick={() => setActiveTab("attachments")}
             >
-              Government Profile
+              attachments Profile
             </button>
           </div>
 
@@ -235,12 +235,12 @@ function Profile() {
             </div>
           )}
 
-          {/* Government Profile Content */}
-          {activeTab === "government" && (
-            <div className="government-profile">
+          {/* attachments Profile Content */}
+          {activeTab === "attachments" && (
+            <div className="attachments-profile">
               <div className="profile-section">
-                <h3>Government Information</h3>
-                <div className="government-fields">
+                <h3>attachments Information</h3>
+                <div className="attachments-fields">
                   <div className="form-group">
                     <label>Agency Name</label>
                     <input type="text" defaultValue="Department of Trade and Industry" />
@@ -269,8 +269,8 @@ function Profile() {
               </div>
 
               <div className="profile-section">
-                <h3>Government Contact</h3>
-                <div className="government-fields">
+                <h3>attachments Contact</h3>
+                <div className="attachments-fields">
                   <div className="form-group">
                     <label>Official Email</label>
                     <input type="email" defaultValue="john.doe@dti.gov.ph" />
@@ -287,8 +287,8 @@ function Profile() {
               </div>
 
               <div className="profile-section">
-                <h3>Government Details</h3>
-                <div className="government-fields">
+                <h3>attachments Details</h3>
+                <div className="attachments-fields">
                   <div className="form-group">
                     <label>Security Clearance Level</label>
                     <select defaultValue="level-2">
