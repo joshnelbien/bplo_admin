@@ -88,6 +88,7 @@ function Renew_records() {
               <th>Business Name</th>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -101,6 +102,7 @@ function Renew_records() {
                 <td>{applicant.businessName}</td>
                 <td>{applicant.firstName}</td>
                 <td>{applicant.lastName}</td>
+                <td>{applicant.status}</td>
               </tr>
             ))}
           </tbody>
@@ -135,6 +137,10 @@ function Renew_records() {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Applicant Details</h3>
+
+            <p>
+              <strong>Status:</strong> {selectedApplicant.status}
+            </p>
             <p>
               <strong>ID:</strong> {selectedApplicant.id}
             </p>

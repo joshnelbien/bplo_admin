@@ -58,7 +58,8 @@ function NewApp() {
       occupancyPermit: "",
       cedula: "",
       photoOfBusinessEstInt: "",
-      photoOfBusinessEstExt: ""
+      photoOfBusinessEstExt: "",
+      status:"pending"
     });
   
     const handleChange = (e) => {
@@ -87,7 +88,7 @@ function NewApp() {
   
     return (
       <div className="container">
-         <button className="back-button" onClick={() => navigate("/")}>← Back to Home</button>
+         <button className="back-button" onClick={() => navigate("/home")}>← Back to Home</button>
         <h1>Business Application Form</h1>
         <form onSubmit={handleSubmit}>
           <section>

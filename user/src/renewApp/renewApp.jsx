@@ -57,7 +57,8 @@ function RenewApp() {
       occupancyPermit: "",
       cedula: "",
       photoOfBusinessEstInt: "",
-      photoOfBusinessEstExt: ""
+      photoOfBusinessEstExt: "",
+      status:"pending"
     });
   
     const handleChange = (e) => {
@@ -79,6 +80,7 @@ function RenewApp() {
   
     const renderInput = (name, label) => (
       <div className="form-group">
+
         <label>{label}</label>
         <input name={name} onChange={handleChange} value={form[name]} />
       </div>
@@ -87,7 +89,7 @@ function RenewApp() {
     return (
       <div className="container">
 
-         <button className="back-button" onClick={() => navigate("/")}>← Back to Home</button>
+         <button className="back-button" onClick={() => navigate("/home")}>← Back to Home</button>
         <h1>RenewBusiness Application Form</h1>
         <form onSubmit={handleSubmit}>
           <section>

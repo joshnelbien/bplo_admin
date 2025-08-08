@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Home from './home/home'
+import Login from './login/login'
 import NewApp from './NewApp/newApp'
 import RenewApp from './renewApp/renewApp'
 
@@ -13,9 +14,10 @@ function App() {
     <BrowserRouter>
       <Routes>
   
-        <Route path="/" element={<Home/>}></Route>
+        <Route path="/home" element={<Home/>}></Route>
         <Route path="/newApp" element={<NewApp/>}></Route>
         <Route path="/renewApp" element={<RenewApp/>}></Route>
+        <Route path="/" element={<Login/>}></Route>
 
       </Routes>
     
