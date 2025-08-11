@@ -17,7 +17,7 @@ function Renew_records() {
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/renew");
+        const res = await axios.get("http://localhost:5000/renew");
         setApplicants(res.data);
       } catch (error) {
         console.error("Error fetching applicants:", error);

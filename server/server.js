@@ -6,16 +6,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/users", require("./routes/user.routes"));
-app.use("/api/forms", require("./routes/user.routes"));
-
+// Local DB routes
+app.use("/new", require("./routes/user.routes"));
 app.use("/renew", require("./routes/renew.routes"));
-app.use("/api/renew", require("./routes/renew.routes"));
 
 
-// Connect to DB and sync
-db.sequelize.sync().then(() => {
-  app.listen(5000, () => {
-    console.log("Server is running on http://localhost:5000");
-  });
-});
+app.use("/api/newapplication", require("./routes/applicationRoutes"));
+
+(async () => {
+  try {
+    // Connect to Supabase
+    await db.supabase.authenticate();
+    console.log("Connected to Supabase Postgres!");
+
+    // Connect to Local
+    await db.local.authenticate();
+    console.log("Connected to Local Postgres!");
+
+    // Start server
+    app.listen(5000, () => {
+      console.log("Server running at http://localhost:5000");
+    });
+  } catch (err) {
+    console.error("DB connection error:", err);
+  }
+})();

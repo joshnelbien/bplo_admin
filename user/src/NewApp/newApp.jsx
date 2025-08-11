@@ -70,7 +70,7 @@ function NewApp() {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const response = await axios.post("http://localhost:5000/api/forms", form);
+        const response = await axios.post("http://localhost:5000/new", form);
         alert("Form submitted successfully!");
         console.log(response.data);
       } catch (error) {

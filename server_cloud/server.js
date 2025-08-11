@@ -9,6 +9,9 @@ app.use(cors());
 app.use(express.json());
 
 
+const applicationRoutes = require("./routes/applicationRoutes");
+app.use("/applications", applicationRoutes);
+
 
 db.sequelize.sync().then(() => {
   const PORT = process.env.PORT || 5000;
@@ -16,3 +19,4 @@ db.sequelize.sync().then(() => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
   });
 });
+
