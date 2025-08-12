@@ -5,14 +5,13 @@ const NewApplication = db.NewApplication; // ✅ Supabase model
 
 // Insert into Supabase
 router.post("/", async (req, res) => {
-  try {
-    const newApplication = await NewApplication.create(req.body);
-    res.status(201).json({ message: "Form submitted successfully", application: newApplication });
-  } catch (error) {
-    console.error("Insert Error:", error);
-    res.status(500).json({ error: "Failed to submit form" });
-  }
+    const last = await NewApplication.max("id") || -1;
+    const newId = (last % 2 === 1) ? last + 2 : last + 1;
+    const newApplication = await NewApplication.create({ id: newId, ...req.body });
+    res.status(201).json(newApplication);
 });
+
+
 
 // Fetch from Supabase
 router.get("/", async (req, res) => {

@@ -5,13 +5,10 @@ const User = db.User; // ✅ Correct model
 
 // Insert into local User table
 router.post("/", async (req, res) => {
-  try {
-    const newUser = await User.create(req.body);
-    res.status(201).json({ message: "Form submitted successfully", user: newUser });
-  } catch (error) {
-    console.error("Insert Error:", error);
-    res.status(500).json({ error: "Failed to submit form" });
-  }
+  const last = await User.max("id") || 0;
+  const newId = (last % 2 === 0) ? last + 2 : last + 1;
+  const newUser = await User.create({ id: newId, ...req.body });
+  res.status(201).json(newUser);
 });
 
 // Fetch from local User table

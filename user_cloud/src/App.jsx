@@ -54,7 +54,7 @@ function App() {
     cedula: "",
     photoOfBusinessEstInt: "",
     photoOfBusinessEstExt: "",
-    status: ""
+    status: "pending"
   });
 
   const handleChange = (e) => {

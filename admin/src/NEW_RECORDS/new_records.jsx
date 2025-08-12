@@ -17,7 +17,7 @@ function New_records() {
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/new");
+        const res = await axios.get("http://localhost:5000/api/newapplication");
         setApplicants(res.data);
       } catch (error) {
         console.error("Error fetching applicants:", error);
