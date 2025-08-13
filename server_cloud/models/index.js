@@ -25,7 +25,9 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 
-db.User = require("./newApplication")(sequelize, Sequelize);
 
+
+const NewApplication = require("./newApplication")(sequelize, Sequelize.DataTypes);
+db.NewApplication = NewApplication;
 
 module.exports = db;
