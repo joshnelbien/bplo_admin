@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
 import "./newApp.css";
 
 import Step1BusinessInfo from "../components/BusinessForm/Step1BusinessInfo";
@@ -85,18 +85,27 @@ function NewApp() {
   }));
 };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5000/applications", form);
-      alert("Form submitted successfully!");
-      console.log(response.data);
-      navigate("/home");
-    } catch (error) {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const { data, error } = await supabase
+      .from("NewApplications") // your table name in Supabase
+      .insert([form]);
+
+    if (error) {
       console.error("Submission error:", error);
       alert("Failed to submit the form.");
+    } else {
+      alert("Form submitted successfully!");
+      console.log(data);
+      navigate("/home");
     }
-  };
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    alert("Failed to submit the form.");
+  }
+};
 
   return (
     <div className="container">
