@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './RenewApp.css';
+import './newApp.css';
 
-function RenewApp() {
+function NewApp() {
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1); // Step tracker
@@ -72,7 +72,7 @@ function RenewApp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/renew", form);
+      const response = await axios.post("http://localhost:5000/api/newapplication", form);
       alert("Form submitted successfully!");
       console.log(response.data);
       navigate('/home');
@@ -109,7 +109,7 @@ function RenewApp() {
   return (
     <div className="container">
       <button className="back-button" onClick={() => navigate("/home")}>← Back to Home</button>
-      <h1>Renew Business Application Form</h1>
+      <h1>Business Application Form</h1>
       <form onSubmit={handleSubmit}>
 
         {/* Step 1: Business Information */}
@@ -233,4 +233,4 @@ function RenewApp() {
   );
 }
 
-export default RenewApp;
+export default NewApp;
