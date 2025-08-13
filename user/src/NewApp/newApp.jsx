@@ -77,6 +77,14 @@ function NewApp() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+  const { name, files } = e.target;
+  setForm((prev) => ({
+    ...prev,
+    [name]: files[0], // store the actual File object
+  }));
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -104,7 +112,7 @@ function NewApp() {
         {step === 5 && <Step5BusinessOperation form={form} handleChange={handleChange} />}
         {step === 6 && <Step6TaxpayerAddress form={form} handleChange={handleChange} />}
         {step === 7 && <Step7BusinessActivity form={form} handleChange={handleChange} />}
-        {step === 8 && <Step8BusinessRequirements form={form} handleChange={handleChange} />}
+        {step === 8 && <Step8BusinessRequirements form={form} handleChange={handleFileChange} />}
 
         <div className="form-actions">
           {step > 1 && (

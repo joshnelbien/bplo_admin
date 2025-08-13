@@ -1,12 +1,20 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './newApp.css';
+import "./newApp.css";
+
+import Step1BusinessInfo from "../components/BusinessForm/Step1BusinessInfo";
+import Step2PersonalInfo from "../components/BusinessForm/Step2PersonalInfo";
+import Step3ContactInfo from "../components/BusinessForm/Step3ContactInfo";
+import Step4BusinessAddress from "../components/BusinessForm/Step4BusinessAddress";
+import Step5BusinessOperation from "../components/BusinessForm/Step5BusinessOperation";
+import Step6TaxpayerAddress from "../components/BusinessForm/Step6TaxpayerAddress";
+import Step7BusinessActivity from "../components/BusinessForm/Step7BusinessActivity";
+import Step8BusinessRequirements from "../components/BusinessForm/Step8BusinessRequirements";
 
 function NewApp() {
   const navigate = useNavigate();
-
-  const [step, setStep] = useState(1); // Step tracker
+  const [step, setStep] = useState(1);
 
   const [form, setForm] = useState({
     BusinessType: "",
@@ -61,7 +69,7 @@ function NewApp() {
     cedula: "",
     photoOfBusinessEstInt: "",
     photoOfBusinessEstExt: "",
-    status: "pending"
+    status: "pending",
   });
 
   const handleChange = (e) => {
@@ -69,164 +77,59 @@ function NewApp() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+  const { name, files } = e.target;
+  setForm((prev) => ({
+    ...prev,
+    [name]: files[0], // store the actual File object
+  }));
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5000/applications", form);
       alert("Form submitted successfully!");
       console.log(response.data);
-      navigate('/home');
+      navigate("/home");
     } catch (error) {
       console.error("Submission error:", error);
       alert("Failed to submit the form.");
     }
   };
 
-  // Validation for each step
-  const stepValid = () => {
-    switch (step) {
-      case 1:
-        return form.BusinessType && form.dscRegNo && form.businessName && form.tinNo && form.TradeName;
-      case 2:
-        return form.firstName && form.middleName && form.lastName && form.extName && form.sex;
-      case 3:
-        return form.eMailAdd && form.telNo && form.mobileNo;
-      case 4:
-        return form.region && form.province && form.cityOrMunicipality && form.barangay && form.addressLine1 && form.zipCode && form.pinAddress;
-      case 5:
-        return form.totalFloorArea && form.numberOfEmployee && form.maleEmployee && form.femaleEmployee && form.numVehicleVan && form.numVehicleTruck && form.numVehicleMotor && form.numNozzle && form.weighScale;
-      case 6:
-        return form.Taxregion && form.Taxprovince && form.TaxcityOrMunicipality && form.Taxbarangay && form.TaxaddressLine1 && form.TaxzipCode && form.TaxpinAddress && form.ownPlace;
-      case 7:
-        return form.tIGE && form.officeType && form.lineOfBusiness && form.productService && form.Units && form.capital;
-      case 8:
-        return form.proofOfReg && form.proofOfRightToUseLoc && form.locationPlan && form.brgyClearance && form.marketClearance && form.occupancyPermit && form.cedula && form.photoOfBusinessEstInt && form.photoOfBusinessEstExt;
-      default:
-        return false;
-    }
-  };
-
   return (
     <div className="container">
-      <button className="back-button" onClick={() => navigate("/home")}>← Back to Home</button>
+      <button className="back-button" onClick={() => navigate("/home")}>
+        ← Back to Home
+      </button>
       <h1>Business Application Form</h1>
       <form onSubmit={handleSubmit}>
+        {step === 1 && <Step1BusinessInfo form={form} handleChange={handleChange} />}
+        {step === 2 && <Step2PersonalInfo form={form} handleChange={handleChange} />}
+        {step === 3 && <Step3ContactInfo form={form} handleChange={handleChange} />}
+        {step === 4 && <Step4BusinessAddress form={form} handleChange={handleChange} />}
+        {step === 5 && <Step5BusinessOperation form={form} handleChange={handleChange} />}
+        {step === 6 && <Step6TaxpayerAddress form={form} handleChange={handleChange} />}
+        {step === 7 && <Step7BusinessActivity form={form} handleChange={handleChange} />}
+        {step === 8 && <Step8BusinessRequirements form={form} handleChange={handleFileChange} />}
 
-        {/* Step 1: Business Information */}
-        {step === 1 && (
-          <section>
-            <h2>Business Information</h2>
-            <input type="text" placeholder="Business Type" name="BusinessType" value={form.BusinessType} onChange={handleChange} />
-            <input type="text" placeholder="DSC Reg No" name="dscRegNo" value={form.dscRegNo} onChange={handleChange} />
-            <input type="text" placeholder="Business Name" name="businessName" value={form.businessName} onChange={handleChange} />
-            <input type="text" placeholder="TIN No" name="tinNo" value={form.tinNo} onChange={handleChange} />
-            <input type="text" placeholder="Trade Name" name="TradeName" value={form.TradeName} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Step 2: Personal Information */}
-        {step === 2 && (
-          <section>
-            <h2>Personal Information</h2>
-            <input type="text" placeholder="First Name" name="firstName" value={form.firstName} onChange={handleChange} />
-            <input type="text" placeholder="Middle Name" name="middleName" value={form.middleName} onChange={handleChange} />
-            <input type="text" placeholder="Last Name" name="lastName" value={form.lastName} onChange={handleChange} />
-            <input type="text" placeholder="Ext Name" name="extName" value={form.extName} onChange={handleChange} />
-            <input type="text" placeholder="Sex" name="sex" value={form.sex} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Step 3: Contact Information */}
-        {step === 3 && (
-          <section>
-            <h2>Contact Information</h2>
-            <input type="text" placeholder="Email Address" name="eMailAdd" value={form.eMailAdd} onChange={handleChange} />
-            <input type="text" placeholder="Telephone Number" name="telNo" value={form.telNo} onChange={handleChange} />
-            <input type="text" placeholder="Mobile Number" name="mobileNo" value={form.mobileNo} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Step 4: Business Address */}
-        {step === 4 && (
-          <section>
-            <h2>Business Address</h2>
-            <input type="text" placeholder="Region" name="region" value={form.region} onChange={handleChange} />
-            <input type="text" placeholder="Province" name="province" value={form.province} onChange={handleChange} />
-            <input type="text" placeholder="City/Municipality" name="cityOrMunicipality" value={form.cityOrMunicipality} onChange={handleChange} />
-            <input type="text" placeholder="Barangay" name="barangay" value={form.barangay} onChange={handleChange} />
-            <input type="text" placeholder="Address Line 1" name="addressLine1" value={form.addressLine1} onChange={handleChange} />
-            <input type="text" placeholder="Zip Code" name="zipCode" value={form.zipCode} onChange={handleChange} />
-            <input type="text" placeholder="Pin Address" name="pinAddress" value={form.pinAddress} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Step 5: Business Operation */}
-        {step === 5 && (
-          <section>
-            <h2>Business Operation</h2>
-            <input type="text" placeholder="Total Floor Area" name="totalFloorArea" value={form.totalFloorArea} onChange={handleChange} />
-            <input type="text" placeholder="Total Employees" name="numberOfEmployee" value={form.numberOfEmployee} onChange={handleChange} />
-            <input type="text" placeholder="Male Employees" name="maleEmployee" value={form.maleEmployee} onChange={handleChange} />
-            <input type="text" placeholder="Female Employees" name="femaleEmployee" value={form.femaleEmployee} onChange={handleChange} />
-            <input type="text" placeholder="Vehicle (Van)" name="numVehicleVan" value={form.numVehicleVan} onChange={handleChange} />
-            <input type="text" placeholder="Vehicle (Truck)" name="numVehicleTruck" value={form.numVehicleTruck} onChange={handleChange} />
-            <input type="text" placeholder="Vehicle (Motorcycle)" name="numVehicleMotor" value={form.numVehicleMotor} onChange={handleChange} />
-            <input type="text" placeholder="Number of Nozzles" name="numNozzle" value={form.numNozzle} onChange={handleChange} />
-            <input type="text" placeholder="Weighing Scale" name="weighScale" value={form.weighScale} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Step 6: Taxpayer’s Address */}
-        {step === 6 && (
-          <section>
-            <h2>Taxpayer’s Address</h2>
-            <input type="text" placeholder="Region" name="Taxregion" value={form.Taxregion} onChange={handleChange} />
-            <input type="text" placeholder="Province" name="Taxprovince" value={form.Taxprovince} onChange={handleChange} />
-            <input type="text" placeholder="City/Municipality" name="TaxcityOrMunicipality" value={form.TaxcityOrMunicipality} onChange={handleChange} />
-            <input type="text" placeholder="Barangay" name="Taxbarangay" value={form.Taxbarangay} onChange={handleChange} />
-            <input type="text" placeholder="Address Line 1" name="TaxaddressLine1" value={form.TaxaddressLine1} onChange={handleChange} />
-            <input type="text" placeholder="Zip Code" name="TaxzipCode" value={form.TaxzipCode} onChange={handleChange} />
-            <input type="text" placeholder="Pin Address" name="TaxpinAddress" value={form.TaxpinAddress} onChange={handleChange} />
-            <input type="text" placeholder="Own Place" name="ownPlace" value={form.ownPlace} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Step 7: Business Activity */}
-        {step === 7 && (
-          <section>
-            <h2>Business Activity</h2>
-            <input type="text" placeholder="Tax Incentives from Gov't" name="tIGE" value={form.tIGE} onChange={handleChange} />
-            <input type="text" placeholder="Office Type" name="officeType" value={form.officeType} onChange={handleChange} />
-            <input type="text" placeholder="Line of Business" name="lineOfBusiness" value={form.lineOfBusiness} onChange={handleChange} />
-            <input type="text" placeholder="Product/Service" name="productService" value={form.productService} onChange={handleChange} />
-            <input type="text" placeholder="Units" name="Units" value={form.Units} onChange={handleChange} />
-            <input type="text" placeholder="Capital" name="capital" value={form.capital} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Step 8: Business Requirements */}
-        {step === 8 && (
-          <section>
-            <h2>Business Requirements</h2>
-            <input type="text" placeholder="Proof of Registration" name="proofOfReg" value={form.proofOfReg} onChange={handleChange} />
-            <input type="text" placeholder="Right to Use Location" name="proofOfRightToUseLoc" value={form.proofOfRightToUseLoc} onChange={handleChange} />
-            <input type="text" placeholder="Location Plan" name="locationPlan" value={form.locationPlan} onChange={handleChange} />
-            <input type="text" placeholder="Barangay Clearance" name="brgyClearance" value={form.brgyClearance} onChange={handleChange} />
-            <input type="text" placeholder="Market Clearance" name="marketClearance" value={form.marketClearance} onChange={handleChange} />
-            <input type="text" placeholder="Occupancy Permit" name="occupancyPermit" value={form.occupancyPermit} onChange={handleChange} />
-            <input type="text" placeholder="CEDULA" name="cedula" value={form.cedula} onChange={handleChange} />
-            <input type="text" placeholder="Photo (Interior)" name="photoOfBusinessEstInt" value={form.photoOfBusinessEstInt} onChange={handleChange} />
-            <input type="text" placeholder="Photo (Exterior)" name="photoOfBusinessEstExt" value={form.photoOfBusinessEstExt} onChange={handleChange} />
-          </section>
-        )}
-
-        {/* Navigation buttons */}
         <div className="form-actions">
-          {step > 1 && <button type="button" onClick={() => setStep(step - 1)}>Back</button>}
-          {step < 8 && (
-            <button type="button" disabled={!stepValid()} onClick={() => setStep(step + 1)}>Next</button>
+          {step > 1 && (
+            <button type="button" onClick={() => setStep(step - 1)}>
+              Back
+            </button>
           )}
-          {step === 8 && <button type="submit" disabled={!stepValid()}>Submit Form</button>}
+          {step < 8 && (
+            <button type="button" onClick={() => setStep(step + 1)}>
+              Next
+            </button>
+          )}
+          {step === 8 && (
+            <button type="submit">
+              Submit Form
+            </button>
+          )}
         </div>
       </form>
     </div>

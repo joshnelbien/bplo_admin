@@ -4,18 +4,17 @@ const db = require("../../server_cloud/models");
 const NewApplication = db.NewApplication;
 
 // Insert new application
+
+
+
 router.post("/", async (req, res) => {
-  try {
-    const newApplication = await NewApplication.create(req.body);
-    res.status(201).json({ 
-      message: "Form submitted successfully", 
-      application: newApplication 
-    });
-  } catch (error) {
-    console.error("Insert Error:", error);
-    res.status(500).json({ error: "Failed to submit form" });
-  }
+  const last = (await NewApplication.max("id")) || 0;
+  const newId = (last % 2 === 0) ? last + 1 : last + 2;
+  const newApplication = await NewApplication.create({ id: newId, ...req.body });
+  res.status(201).json(newApplication);
 });
+
+
 
 // Fetch all applications
 router.get("/", async (req, res) => {

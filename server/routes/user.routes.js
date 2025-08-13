@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../models");
 const User = db.User; // ✅ Correct model
 
+
 // Insert into local User table
 router.post("/", async (req, res) => {
   const last = await User.max("id") || 0;
