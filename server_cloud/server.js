@@ -3,10 +3,15 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./models");
 
-const app = express();
+const app = express();  
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  credentials: true
+}));
+
 app.use(express.json());
+
 
 
 const applicationRoutes = require("./routes/applicationRoutes");
