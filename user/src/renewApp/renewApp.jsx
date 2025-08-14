@@ -187,7 +187,7 @@ function RenewApp() {
       <button className="back-button" onClick={() => navigate("/home")}>
         ← Back to Home
       </button>
-      <h1>Business Application Form</h1>
+      <h1>Renew Business Application Form</h1>
       <form onSubmit={handleSubmit}>
         {step === 1 && <Step1BusinessInfo form={form} handleChange={handleChange} />}
         {step === 2 && <Step2PersonalInfo form={form} handleChange={handleChange} />}
