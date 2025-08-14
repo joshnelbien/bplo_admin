@@ -42,7 +42,7 @@ db.Sequelize = Sequelize;
 db.supabase = supabaseSequelize;
 db.local = localSequelize;
 
-
+db.renewApplication = require("./renewApplication")(supabaseSequelize, Sequelize);
 db.NewApplication = require("./newApplication")(supabaseSequelize, Sequelize);
 db.User = require("./usersApplication")(localSequelize, Sequelize);
 db.renew = require("./renewApplication")(localSequelize, Sequelize);

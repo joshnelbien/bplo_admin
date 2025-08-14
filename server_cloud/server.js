@@ -17,6 +17,9 @@ app.use(express.json());
 const applicationRoutes = require("./routes/applicationRoutes");
 app.use("/applications", applicationRoutes);
 
+const applicationRoutes = require("./routes/renewApplication");
+app.use("/renewapplications", applicationRoutes);
+
 
 db.sequelize.sync().then(() => {
   const PORT = process.env.PORT || 5000;

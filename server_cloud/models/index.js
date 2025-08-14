@@ -28,6 +28,8 @@ db.sequelize = sequelize;
 
 
 const NewApplication = require("./newApplication")(sequelize, Sequelize.DataTypes);
+const RenewApplications = require("./RenewApplications")(sequelize, Sequelize.DataTypes);
 db.NewApplication = NewApplication;
+db.RenewApplications = RenewApplications;
 
 module.exports = db;

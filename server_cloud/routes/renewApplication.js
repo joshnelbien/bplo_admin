@@ -7,7 +7,7 @@ const NewApplication = db.NewApplication; // ✅ Supabase model
 router.post("/", async (req, res) => {
   try {
     const last = await RenewApplicationCloud.max("id") || -1;
-    const newId = (last % 2 === 1) ? last + 2 : last + 1;
+    const newId = (last % 2 === 1) ? last + 2 : last + 2;
     const renew = await RenewApplicationCloud.create({ id: newId, ...req.body });
     res.status(201).json(renew);
   } catch (error) {
