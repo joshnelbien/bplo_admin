@@ -8,7 +8,8 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
         <input
           type="file"
           name="proofOfReg"
-          onChange={form.andleFileChange}
+          
+          onChange={form.handleFileChange}
         />
       </label>
 

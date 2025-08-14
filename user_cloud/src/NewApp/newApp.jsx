@@ -85,6 +85,89 @@ function NewApp() {
   }));
 };
 
+const isNextDisabled = () => {
+    if (step === 1) {
+      return !(
+        form.BusinessType &&
+        form.dscRegNo.trim() !== "" &&
+        form.businessName.trim() !== "" &&
+        form.tinNo.trim() !== ""
+      );
+    }
+
+    if (step === 2) {
+    return !(
+      form.firstName.trim() !== "" &&
+      form.lastName.trim() !== "" &&
+      form.sex.trim() !== ""
+    );
+  }
+
+  if (step === 3) {
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.eMailAdd.trim());
+    return !(emailValid && form.mobileNo.trim() !== "");
+  }
+
+   if (step === 4) {
+    return !(
+      form.addressLine1.trim() !== "" &&
+      form.zipCode.trim() !== "" &&
+      form.pinAddress.trim() !== ""
+    );
+  }
+
+    if (step === 5) {
+    return !(
+      form.totalFloorArea.trim() !== "" &&
+      form.numberOfEmployee.trim() !== "" &&
+      form.maleEmployee.trim() !== "" &&
+      form.femaleEmployee.trim() !== "" &&
+      form.numVehicleVan.trim() !== "" &&
+      form.numVehicleTruck.trim() !== "" &&
+      form.numVehicleMotor.trim() !== "" &&
+      form.numNozzle.trim() !== "" &&
+      form.weighScale.trim() !== ""
+    );
+  }
+
+  if (step === 6) {
+    return !(
+      form.Taxregion.trim() !== "" &&
+      form.Taxprovince.trim() !== "" &&
+      form.TaxcityOrMunicipality.trim() !== "" &&
+      form.Taxbarangay.trim() !== "" &&
+      form.TaxaddressLine1.trim() !== "" &&
+      form.TaxzipCode.trim() !== "" &&
+      form.TaxpinAddress.trim() !== ""
+    );
+  }
+
+  if (step === 7) {
+    return !(
+      form.tIGE.trim() !== "" &&
+      form.officeType.trim() !== "" &&
+      form.lineOfBusiness.trim() !== "" &&
+      form.productService.trim() !== "" &&
+      form.Units.trim() !== "" &&
+      form.capital.trim() !== "" 
+    );
+  }
+
+   if (step === 8) {
+    return !(
+      form.tIGE.trim() !== "" &&
+      form.officeType.trim() !== "" &&
+      form.lineOfBusiness.trim() !== "" &&
+      form.productService.trim() !== "" &&
+      form.Units.trim() !== "" &&
+      form.capital.trim() !== "" 
+    );
+  }
+
+    // Add similar checks for other steps if needed
+    return false;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -121,7 +204,7 @@ function NewApp() {
             </button>
           )}
           {step < 8 && (
-            <button type="button" onClick={() => setStep(step + 1)}>
+            <button type="button" onClick={() => setStep(step + 1)}disabled={isNextDisabled()}>
               Next
             </button>
           )}

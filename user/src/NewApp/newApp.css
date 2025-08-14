@@ -86,8 +86,8 @@ input[type="file"] {
 
 /* Back button */
 .form-actions button[type="button"] {
-  background: #ccc;
-  color: #333;
+  background: #09af25;
+  color: #080baf;
 }
 
 .form-actions button[type="button"]:hover {
@@ -119,4 +119,11 @@ input[type="file"] {
 
 .back-button:hover {
   text-decoration: underline;
+}
+
+button:disabled {
+  background-color: #cccccc; /* greyed out */
+  color: #09ff002c;
+  cursor: not-allowed;
+  opacity: 0.7;
 }

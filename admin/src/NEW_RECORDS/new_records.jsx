@@ -17,7 +17,7 @@ function New_records() {
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/newapplication");
+        const res = await axios.get("http://localhost:5000/new");
         setApplicants(res.data);
       } catch (error) {
         console.error("Error fetching applicants:", error);
@@ -168,6 +168,8 @@ function New_records() {
             </p>
             {/* Add other fields here if needed */}
             <button onClick={closeModal}>Close</button>
+            <button onClick={closeModal}>Approved</button>
+            <button onClick={closeModal}>Decline</button>
           </div>
         </div>
       )}
