@@ -18,7 +18,7 @@ const applicationRoutes = require("./routes/applicationRoutes");
 app.use("/applications", applicationRoutes);
 
 const renewApplication = require("./routes/renewApplication");
-app.use("/renewapplications", renewApplication);
+app.use("/renewApplications", renewApplication);
 
 
 db.sequelize.sync().then(() => {
