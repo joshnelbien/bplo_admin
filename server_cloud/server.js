@@ -17,8 +17,8 @@ app.use(express.json());
 const applicationRoutes = require("./routes/applicationRoutes");
 app.use("/applications", applicationRoutes);
 
-const applicationRoutes = require("./routes/renewApplication");
-app.use("/renewapplications", applicationRoutes);
+const renewApplication = require("./routes/renewApplication");
+app.use("/renewapplications", renewApplication);
 
 
 db.sequelize.sync().then(() => {
