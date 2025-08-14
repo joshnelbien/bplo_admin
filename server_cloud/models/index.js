@@ -28,7 +28,8 @@ db.sequelize = sequelize;
 
 
 const NewApplication = require("./newApplication")(sequelize, Sequelize.DataTypes);
-const RenewApplications = require("./RenewApplication")(sequelize, Sequelize.DataTypes);
+const RenewApplications = require("./renewApplications")(sequelize, Sequelize.DataTypes);
+
 db.NewApplication = NewApplication;
 db.RenewApplications = RenewApplications;
 

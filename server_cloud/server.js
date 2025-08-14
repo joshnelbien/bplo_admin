@@ -17,7 +17,7 @@ app.use(express.json());
 const applicationRoutes = require("./routes/applicationRoutes");
 app.use("/applications", applicationRoutes);
 
-const renewApplication = require("./routes/renewApplication");
+const renewApplication = require("./routes/renewApplications");
 app.use("/renewApplications", renewApplication);
 
 
