@@ -172,7 +172,7 @@ function RenewApp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://bplo-admin.onrender.com/renewapplications", form);
+      const response = await axios.post("https://bplo-admin.onrender.com/renewApplications", form);
       alert("Form submitted successfully!");
       console.log(response.data);
       navigate("/home");
