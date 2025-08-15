@@ -1,5 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import Cenro from './BACKROOM/CENRO/cenro'
+import Cho from './BACKROOM/CHO/cho'
+import Cmswo from './BACKROOM/CMSWO/cmswo'
+import Obo from './BACKROOM/OBO/obo'
+import Zoning from './BACKROOM/ZONING/zoning'
 import Dashboard from './DASHBOARD/dashboard'
 import Login from './LOGIN/login'
 import New_records from './NEW_RECORDS/new_records'
@@ -18,7 +23,12 @@ function App() {
         <Route path="/new_records" element={<New_records/>}></Route>
         <Route path="/renew_records" element={<Renew_records/>}></Route>
         <Route path="/profile" element={<Profile/>}></Route>
-
+        <Route path="/cenro" element={<Cenro/>}></Route>
+        <Route path="/cho" element={<Cho/>}></Route>
+        <Route path="/cmswo" element={<Cmswo/>}></Route>
+        <Route path="/zoning" element={<Zoning/>}></Route>
+        <Route path="/obo" element={<Obo/>}></Route>
+        
       </Routes>
     
     </BrowserRouter>

@@ -15,6 +15,9 @@ function Home() {
           <li>
             <button onClick={() => navigate("/renewApp")}>Renew App</button>
           </li>
+          <li>
+            <button onClick={() => navigate("/apptrack")}>Application Tracker</button>
+          </li>
         </ul>
       </div>
     </div>

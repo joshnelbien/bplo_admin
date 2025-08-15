@@ -24,6 +24,13 @@ function Side_bar() {
                     <li><button onClick={() => navigate("/new_records")}>New Application</button></li>
                     <li><button onClick={() => navigate("/renew_records")}>Renew Application</button></li>
                     <li><button onClick={() => navigate("/profile")}>Profile</button></li>
+                    <li><button onClick={() => navigate("/obo")}>OBO</button></li>
+                    <li><button onClick={() => navigate("/cho")}>CHO</button></li>
+                    <li><button onClick={() => navigate("/cmswo")}>CMSWO</button></li>
+                    <li><button onClick={() => navigate("/zoning")}>ZONING</button></li>
+                    <li><button onClick={() => navigate("/cenro")}>CENRO</button></li>
+
+
                     <li>
                         <button onClick={(e) => { e.preventDefault(); handleLogout(); }}>
                             Log Out

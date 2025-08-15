@@ -9,10 +9,12 @@ app.use(express.json());
 // Local DB routes
 app.use("/new", require("./routes/user.routes"));
 app.use("/renew", require("./routes/renew.routes"));
+app.use("/backroom", require("./routes/backroom"));
 
 // Cloud DB routes
 app.use("/api/newapplication", require("./routes/applicationRoutes"));
 app.use("/api/renewapplication", require("./routes/renewApplicationRoutes"));
+
 
 // Track Supabase connection status
 let isSupabaseConnected = false;
@@ -31,7 +33,7 @@ let isSupabaseConnected = false;
       isSupabaseConnected = true;
       await db.supabase.sync(); // no alter to avoid heavy queries
     } catch (err) {
-      console.warn("⚠ Supabase connection failed. Running in LOCAL mode only.");
+      console.warn(" Supabase connection failed. Running in LOCAL mode only.");
       isSupabaseConnected = false;
     }
 
