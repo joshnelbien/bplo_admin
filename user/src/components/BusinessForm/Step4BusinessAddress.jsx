@@ -1,37 +1,28 @@
 import { useEffect, useState } from "react";
 
 export default function Step4BusinessAddress({ form, handleChange }) {
-  const [psgc, setPsgc] = useState(null);
+  const [barangayOptions, setBarangayOptions] = useState([]);
 
-  // Fixed values
-  const FIXED_REGION = "REGION IV-A"; // Example code for Region IV-A in PSGC
-  const FIXED_PROVINCE = "LAGUNA";
-  const FIXED_CITY = "SAN PABLO CITY";
-
-  // Load PSGC JSON once
   useEffect(() => {
     fetch("/psgc.json")
       .then((res) => res.json())
       .then((data) => {
-        setPsgc(data);
+        const barangays =
+          data["REGION IV-A"]?.province_list["LAGUNA"]?.municipality_list[
+            "SAN PABLO CITY"
+          ]?.barangay_list || [];
 
-        // Pre-fill fixed values into form if not set yet
-        if (!form.region || !form.province || !form.cityOrMunicipality) {
-          handleChange({ target: { name: "region", value: FIXED_REGION } });
-          handleChange({ target: { name: "province", value: FIXED_PROVINCE } });
-          handleChange({
-            target: { name: "cityOrMunicipality", value: FIXED_CITY },
-          });
-        }
+        setBarangayOptions(barangays);
       })
       .catch((err) => console.error("Error loading PSGC:", err));
-  }, []);
 
-  // Get barangays for San Pablo
-  const barangayOptions =
-    psgc?.[FIXED_REGION]?.province_list?.[FIXED_PROVINCE]?.municipality_list?.[
-      FIXED_CITY
-    ]?.barangay_list || [];
+    // Auto-set fixed values if not set
+    if (!form.region || !form.province || !form.cityOrMunicipality) {
+      handleChange({ target: { name: "region", value: "REGION IV-A" } });
+      handleChange({ target: { name: "province", value: "LAGUNA" } });
+      handleChange({ target: { name: "cityOrMunicipality", value: "SAN PABLO CITY" } });
+    }
+  }, [form.region, form.province, form.cityOrMunicipality, handleChange]);
 
   return (
     <section>
@@ -40,38 +31,25 @@ export default function Step4BusinessAddress({ form, handleChange }) {
       {/* FIXED REGION */}
       <label>
         Region
-        <select name="region" value={FIXED_REGION} disabled>
-          <option value={FIXED_REGION}>
-            {psgc?.[FIXED_REGION]?.region_name || "Region IV-A"}
-          </option>
-        </select>
+        <input type="text" value="REGION IV-A" disabled />
       </label>
 
       {/* FIXED PROVINCE */}
       <label>
         Province
-        <select name="province" value={FIXED_PROVINCE} disabled>
-          <option value={FIXED_PROVINCE}>{FIXED_PROVINCE}</option>
-        </select>
+        <input type="text" value="LAGUNA" disabled />
       </label>
 
       {/* FIXED CITY */}
       <label>
         City / Municipality
-        <select name="cityOrMunicipality" value={FIXED_CITY} disabled>
-          <option value={FIXED_CITY}>{FIXED_CITY}</option>
-        </select>
+        <input type="text" value="SAN PABLO CITY" disabled />
       </label>
 
-      {/* SELECTABLE BARANGAY */}
+      {/* BARANGAY */}
       <label>
         Barangay
-        <select
-          name="barangay"
-          value={form.barangay}
-          onChange={handleChange}
-          disabled={!barangayOptions.length}
-        >
+        <select name="barangay" value={form.barangay} onChange={handleChange}>
           <option value="">Select Barangay</option>
           {barangayOptions.map((brgy) => (
             <option key={brgy} value={brgy}>

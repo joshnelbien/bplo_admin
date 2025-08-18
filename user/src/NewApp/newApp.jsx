@@ -187,6 +187,20 @@ function NewApp() {
       <button className="back-button" onClick={() => navigate("/home")}>
         ← Back to Home
       </button>
+
+      <div className="progress-container">
+  <div className="progress-text">
+    Step {step} / 8
+  </div>
+  <div className="progress-bar">
+    <div
+      className="progress-fill"
+      style={{ width: `${(step / 8) * 100}%` }}
+    ></div>
+  </div>
+</div>
+
+
       <h1>Business Application Form</h1>
       <form onSubmit={handleSubmit}>
         {step === 1 && <Step1BusinessInfo form={form} handleChange={handleChange} />}

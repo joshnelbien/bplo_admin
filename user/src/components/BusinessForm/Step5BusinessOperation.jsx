@@ -5,6 +5,18 @@ export default function Step5BusinessDetails({ form, handleChange }) {
     handleChange({ target: { name: e.target.name, value } });
   };
 
+  // Auto-calculate total employees
+  const male = parseInt(form.maleEmployee || "0", 10);
+  const female = parseInt(form.femaleEmployee || "0", 10);
+  const totalEmployees = male + female;
+
+  // Keep total employees in sync with form
+  if (form.numberOfEmployee !== String(totalEmployees)) {
+    handleChange({
+      target: { name: "numberOfEmployee", value: String(totalEmployees) },
+    });
+  }
+
   return (
     <section>
       <h2>Business Operation</h2>
@@ -21,17 +33,7 @@ export default function Step5BusinessDetails({ form, handleChange }) {
         />
       </label>
 
-      <label>
-        Total Employees
-        <input
-          type="text"
-          inputMode="numeric"
-          pattern="[0-9]*"
-          name="numberOfEmployee"
-          value={form.numberOfEmployee}
-          onInput={handleNumberInput}
-        />
-      </label>
+    
 
       <label>
         Male Employees
@@ -54,6 +56,17 @@ export default function Step5BusinessDetails({ form, handleChange }) {
           name="femaleEmployee"
           value={form.femaleEmployee}
           onInput={handleNumberInput}
+        />
+      </label>
+
+        {/* AUTO-CALCULATED TOTAL EMPLOYEES */}
+      <label>
+        Total Employees
+        <input
+          type="text"
+          name="numberOfEmployee"
+          value={totalEmployees}
+          readOnly
         />
       </label>
 
