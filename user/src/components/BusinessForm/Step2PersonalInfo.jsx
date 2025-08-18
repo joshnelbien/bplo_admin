@@ -1,8 +1,7 @@
-
 export default function Step2PersonalInfo({ form, handleChange }) {
   return (
     <section>
-      <h2>Personal Information</h2>
+      <h2>Owner's Personal Information</h2>
 
       <label>
         First Name
@@ -46,12 +45,7 @@ export default function Step2PersonalInfo({ form, handleChange }) {
 
       <label>
         Sex
-        <select
-          name="sex"
-          value={form.sex}
-          onChange={handleChange}
-          required
-        >
+        <select name="sex" value={form.sex} onChange={handleChange} required>
           <option value="">Select</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>

@@ -3,102 +3,74 @@ import { useEffect, useState } from "react";
 export default function Step4BusinessAddress({ form, handleChange }) {
   const [psgc, setPsgc] = useState(null);
 
-  // Load the PSGC JSON file once
+  // Fixed values
+  const FIXED_REGION = "REGION IV-A"; // Example code for Region IV-A in PSGC
+  const FIXED_PROVINCE = "LAGUNA";
+  const FIXED_CITY = "SAN PABLO CITY";
+
+  // Load PSGC JSON once
   useEffect(() => {
     fetch("/psgc.json")
       .then((res) => res.json())
-      .then((data) => setPsgc(data))
+      .then((data) => {
+        setPsgc(data);
+
+        // Pre-fill fixed values into form if not set yet
+        if (!form.region || !form.province || !form.cityOrMunicipality) {
+          handleChange({ target: { name: "region", value: FIXED_REGION } });
+          handleChange({ target: { name: "province", value: FIXED_PROVINCE } });
+          handleChange({
+            target: { name: "cityOrMunicipality", value: FIXED_CITY },
+          });
+        }
+      })
       .catch((err) => console.error("Error loading PSGC:", err));
   }, []);
 
-  // Get provinces for selected region
-  const provinceOptions = form.region && psgc
-    ? Object.keys(psgc[form.region]?.province_list || {})
-    : [];
-
-  // Get cities/municipalities for selected province
-  const cityOptions =
-    form.region && form.province && psgc
-      ? Object.keys(
-          psgc[form.region]?.province_list[form.province]?.municipality_list ||
-            {}
-        )
-      : [];
-
-  // Get barangays for selected city
+  // Get barangays for San Pablo
   const barangayOptions =
-    form.region && form.province && form.cityOrMunicipality && psgc
-      ? psgc[form.region]?.province_list[form.province]?.municipality_list[
-          form.cityOrMunicipality
-        ]?.barangay_list || []
-      : [];
+    psgc?.[FIXED_REGION]?.province_list?.[FIXED_PROVINCE]?.municipality_list?.[
+      FIXED_CITY
+    ]?.barangay_list || [];
 
   return (
     <section>
       <h2>Business Address</h2>
 
-      {/* REGION */}
+      {/* FIXED REGION */}
       <label>
         Region
-        <select
-          name="region"
-          value={form.region}
-          onChange={handleChange}
-        >
-          <option value="">Select Region</option>
-          {psgc &&
-            Object.entries(psgc).map(([code, data]) => (
-              <option key={code} value={code}>
-                {data.region_name}
-              </option>
-            ))}
+        <select name="region" value={FIXED_REGION} disabled>
+          <option value={FIXED_REGION}>
+            {psgc?.[FIXED_REGION]?.region_name || "Region IV-A"}
+          </option>
         </select>
       </label>
 
-      {/* PROVINCE */}
+      {/* FIXED PROVINCE */}
       <label>
         Province
-        <select
-          name="province"
-          value={form.province}
-          onChange={handleChange}
-          disabled={!form.region}
-        >
-          <option value="">Select Province</option>
-          {provinceOptions.map((prov) => (
-            <option key={prov} value={prov}>
-              {prov}
-            </option>
-          ))}
+        <select name="province" value={FIXED_PROVINCE} disabled>
+          <option value={FIXED_PROVINCE}>{FIXED_PROVINCE}</option>
         </select>
       </label>
 
-      {/* CITY / MUNICIPALITY */}
+      {/* FIXED CITY */}
       <label>
         City / Municipality
-        <select
-          name="cityOrMunicipality"
-          value={form.cityOrMunicipality}
-          onChange={handleChange}
-          disabled={!form.province}
-        >
-          <option value="">Select City / Municipality</option>
-          {cityOptions.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
+        <select name="cityOrMunicipality" value={FIXED_CITY} disabled>
+          <option value={FIXED_CITY}>{FIXED_CITY}</option>
         </select>
       </label>
 
-      {/* BARANGAY */}
+      {/* SELECTABLE BARANGAY */}
       <label>
         Barangay
         <select
           name="barangay"
           value={form.barangay}
           onChange={handleChange}
-          disabled={!form.cityOrMunicipality}
+          disabled={!barangayOptions.length}
         >
           <option value="">Select Barangay</option>
           {barangayOptions.map((brgy) => (
@@ -130,8 +102,6 @@ export default function Step4BusinessAddress({ form, handleChange }) {
         />
       </label>
 
-
-          
       <label>
         PIN Address
         <input
