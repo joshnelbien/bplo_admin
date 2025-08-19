@@ -146,17 +146,17 @@ function NewApp() {
     );
   }
 
-  if (step === 7) {
-    return !(
-      form.tIGE.trim() !== "" &&
-  
-      form.officeType.trim() !== "" &&
-      form.lineOfBusiness.trim() !== "" &&
-      form.productService.trim() !== "" &&
-      form.Units.trim() !== "" &&
-      form.capital.trim() !== "" 
-    );
-  }
+  // if (step === 7) {
+  //   return !(
+
+
+  //     form.officeType.trim() !== "" &&
+  //     form.lineOfBusiness.trim() !== "" &&
+  //     form.productService.trim() !== "" &&
+  //     form.Units.trim() !== "" &&
+  //     form.capital.trim() !== "" 
+  //   );
+  // }
 
    if (step === 8) {
     return !(

@@ -1,8 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Backroom = sequelize.define("Backroom", {
     // Business Information
-
-    BusinessType: {
+  BusinessType: {
       type: DataTypes.STRING,
     },
     //DTI/SEC /CDA Registration No.
@@ -163,11 +162,29 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
+    taxdec:{
+      type: DataTypes.STRING,
+    },
+
+    lessorName:{
+      type: DataTypes.STRING,
+    },
+
+    monthlyRent:{
+      type: DataTypes.STRING,
+    },
+
+
     //Tax Incentives from any Government Entity
 
     tIGE:{
         type: DataTypes.STRING,
     },
+
+    tIGEfiles:{
+      type: DataTypes.STRING,
+    },
+
 
     //business activity
 
@@ -175,11 +192,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
     },
 
+    officeTypeOther:{
+        type: DataTypes.STRING,
+    },
 
     lineOfBusiness:{
         type: DataTypes.STRING,
-    
-
     },
 
     productService:{

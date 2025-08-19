@@ -186,9 +186,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
-    taxIncentives:{
-      type: DataTypes.STRING,
-    },
 
     //business activity
 
@@ -196,11 +193,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
     },
 
+    officeTypeOther:{
+        type: DataTypes.STRING,
+    },
 
     lineOfBusiness:{
         type: DataTypes.STRING,
-    
-
     },
 
     productService:{

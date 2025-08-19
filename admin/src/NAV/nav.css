@@ -28,3 +28,26 @@
   font-weight: 50;
   align-items: center;
 }
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-circle.online {
+  background-color: green;
+}
+
+.status-circle.offline {
+  background-color: gray;
+}

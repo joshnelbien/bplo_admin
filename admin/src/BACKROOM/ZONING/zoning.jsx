@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Nav from "../../NAV/nav";
 import Side_bar from "../../SIDE_BAR/side_bar";
 import "./zoning.css";
+import ZoningCert from "./zoningCert"; //
 
 function Zoning() {
   const [applicants, setApplicants] = useState([]);
@@ -12,6 +13,7 @@ function Zoning() {
   );
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
   const recordsPerPage = 20;
 
   useEffect(() => {
@@ -26,7 +28,6 @@ function Zoning() {
 
     fetchApplicants();
 
-    
     const handleResize = () => {
       setMaxPageButtons(window.innerWidth <= 600 ? 7 : 10);
     };
@@ -66,11 +67,13 @@ function Zoning() {
 
   const openModal = (applicant) => {
     setSelectedApplicant(applicant);
+    setShowCertificate(false); // reset to details first
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setSelectedApplicant(null);
+    setShowCertificate(false);
     setIsModalOpen(false);
   };
 
@@ -133,43 +136,51 @@ function Zoning() {
         </div>
       </div>
 
+      {/* Modal */}
       {isModalOpen && selectedApplicant && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Applicant Details</h3>
+            {!showCertificate ? (
+              <>
+                <h3>Applicant Details</h3>
+                <p>
+                  <strong>Status:</strong> {selectedApplicant.status}
+                </p>
+                <p>
+                  <strong>ID:</strong> {selectedApplicant.id}
+                </p>
+                <p>
+                  <strong>Business Name:</strong> {selectedApplicant.businessName}
+                </p>
+                <p>
+                  <strong>Business Type:</strong> {selectedApplicant.BusinessType}
+                </p>
+                <p>
+                  <strong>Trade Name:</strong> {selectedApplicant.TradeName}
+                </p>
+                <p>
+                  <strong>First Name:</strong> {selectedApplicant.firstName}
+                </p>
+                <p>
+                  <strong>Last Name:</strong> {selectedApplicant.lastName}
+                </p>
+                <p>
+                  <strong>DSC Registration No:</strong> {selectedApplicant.dscRegNo}
+                </p>
+                <p>
+                  <strong>TIN Number:</strong> {selectedApplicant.tinNo}
+                </p>
 
-             <p>
-              <strong>Status:</strong> {selectedApplicant.status}
-            </p>
-
-            <p>
-              <strong>ID:</strong> {selectedApplicant.id}
-            </p>
-            <p>
-              <strong>Business Name:</strong> {selectedApplicant.businessName}
-            </p>
-            <p>
-              <strong>Business Type:</strong> {selectedApplicant.BusinessType}
-            </p>
-            <p>
-              <strong>Trade Name:</strong> {selectedApplicant.TradeName}
-            </p>
-            <p>
-              <strong>First Name:</strong> {selectedApplicant.firstName}
-            </p>
-            <p>
-              <strong>Last Name:</strong> {selectedApplicant.lastName}
-            </p>
-            <p>
-              <strong>DSC Registration No:</strong> {selectedApplicant.dscRegNo}
-            </p>
-            <p>
-              <strong>TIN Number:</strong> {selectedApplicant.tinNo}
-            </p>
-            {/* Add other fields here if needed */}
-            <button onClick={closeModal}>Close</button>
-            <button onClick={closeModal}>Approved</button>
-            <button onClick={closeModal}>Decline</button>
+                <button onClick={() => setShowCertificate(true)}>
+                  Generate Certificate
+                </button>
+                <button onClick={closeModal}>Close</button>
+                <button onClick={closeModal}>Approved</button>
+                <button onClick={closeModal}>Decline</button>
+              </>
+            ) : (
+              <ZoningCert applicant={selectedApplicant} />
+            )}
           </div>
         </div>
       )}

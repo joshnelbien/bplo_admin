@@ -42,7 +42,6 @@ export default function Step2PersonalInfo({ form, handleChange }) {
           onChange={handleChange}
         />
       </label>
-+
 
       <label>
         Gender
