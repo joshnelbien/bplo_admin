@@ -20,11 +20,28 @@ function getFilipinoMonth(monthIndex) {
   return months[monthIndex];
 }
 
+// Compute zoning fee based on capital
+function calculateZoningFee(capital) {
+  if (capital <= 5000) {
+    return "Exempted";
+  } else if (capital >= 5001 && capital <= 10000) {
+    return 100;
+  } else if (capital >= 10001 && capital <= 50000) {
+    return 200;
+  } else if (capital >= 50001 && capital <= 100000) {
+    return 300;
+  } else {
+    return ((capital - 100000) * 0.001 + 500).toFixed(2);
+  }
+}
+
 function ZoningCert({ applicant }) {
   const today = new Date();
   const day = today.getDate();
   const month = getFilipinoMonth(today.getMonth());
   const year = today.getFullYear();
+
+  const zoningFee = calculateZoningFee(applicant.capital);
 
   return (
     <div className="zoning-certificate">
@@ -53,7 +70,10 @@ function ZoningCert({ applicant }) {
       </p>
 
       <p>CAPITAL: P<u><b>{applicant.capital}</b></u></p>
-      <p>ZONING FEE: P____________</p>
+      <p>
+        ZONING FEE:{" "}
+        <u><b>{zoningFee === "Exempted" ? zoningFee : `P${zoningFee}`}</b></u>
+      </p>
 
       <p>New</p>
       <p>Renew</p>
