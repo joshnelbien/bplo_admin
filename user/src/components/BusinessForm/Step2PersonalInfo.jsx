@@ -42,11 +42,12 @@ export default function Step2PersonalInfo({ form, handleChange }) {
           onChange={handleChange}
         />
       </label>
++
 
       <label>
-        Sex
+        Gender
         <select name="sex" value={form.sex} onChange={handleChange} required>
-          <option value="">Gender</option>
+          <option value="">Select</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>

@@ -150,6 +150,8 @@ const handleApprove = async (id) => {
       <h3>Applicant Details</h3>
 
       {/* Business Information */}
+
+      <div className="modal-section">
       <p><strong>Status:</strong> {selectedApplicant.status}</p>
       <p><strong>ID:</strong> {selectedApplicant.id}</p>
       <p><strong>Business Type:</strong> {selectedApplicant.BusinessType}</p>
@@ -157,20 +159,29 @@ const handleApprove = async (id) => {
       <p><strong>Business Name:</strong> {selectedApplicant.businessName}</p>
       <p><strong>TIN No:</strong> {selectedApplicant.tinNo}</p>
       <p><strong>Trade Name:</strong> {selectedApplicant.TradeName}</p>
+</div>
+
 
       {/* Personal Information */}
+      <div className="modal-section">
       <p><strong>First Name:</strong> {selectedApplicant.firstName}</p>
       <p><strong>Middle Name:</strong> {selectedApplicant.middleName}</p>
       <p><strong>Last Name:</strong> {selectedApplicant.lastName}</p>
       <p><strong>Extension Name:</strong> {selectedApplicant.extName}</p>
       <p><strong>Sex:</strong> {selectedApplicant.sex}</p>
+</div>
+
 
       {/* Contact Information */}
+      <div className="modal-section">
       <p><strong>Email:</strong> {selectedApplicant.eMailAdd}</p>
       <p><strong>Telephone No:</strong> {selectedApplicant.telNo}</p>
       <p><strong>Mobile No:</strong> {selectedApplicant.mobileNo}</p>
+</div>
+
 
       {/* Business Address */}
+      <div className="modal-section">
       <p><strong>Region:</strong> {selectedApplicant.region}</p>
       <p><strong>Province:</strong> {selectedApplicant.province}</p>
       <p><strong>City/Municipality:</strong> {selectedApplicant.cityOrMunicipality}</p>
@@ -178,8 +189,11 @@ const handleApprove = async (id) => {
       <p><strong>Address Line 1:</strong> {selectedApplicant.addressLine1}</p>
       <p><strong>Zip Code:</strong> {selectedApplicant.zipCode}</p>
       <p><strong>Pin Address:</strong> {selectedApplicant.pinAddress}</p>
+</div>
+
 
       {/* Business Operation */}
+      <div className="modal-section">
       <p><strong>Total Floor Area:</strong> {selectedApplicant.totalFloorArea}</p>
       <p><strong>Number of Employees:</strong> {selectedApplicant.numberOfEmployee}</p>
       <p><strong>Male Employees:</strong> {selectedApplicant.maleEmployee}</p>
@@ -189,8 +203,11 @@ const handleApprove = async (id) => {
       <p><strong>Number of Motorcycles:</strong> {selectedApplicant.numVehicleMotor}</p>
       <p><strong>No. of Nozzles:</strong> {selectedApplicant.numNozzle}</p>
       <p><strong>Weigh Scale:</strong> {selectedApplicant.weighScale}</p>
+</div>
+
 
       {/* Tax Payers Address */}
+      <div className="modal-section">
       <p><strong>Tax Region:</strong> {selectedApplicant.Taxregion}</p>
       <p><strong>Tax Province:</strong> {selectedApplicant.Taxprovince}</p>
       <p><strong>Tax City/Municipality:</strong> {selectedApplicant.TaxcityOrMunicipality}</p>
@@ -199,8 +216,9 @@ const handleApprove = async (id) => {
       <p><strong>Tax Zip Code:</strong> {selectedApplicant.TaxzipCode}</p>
       <p><strong>Tax Pin Address:</strong> {selectedApplicant.TaxpinAddress}</p>
       <p><strong>Own Place:</strong> {selectedApplicant.ownPlace}</p>
-
+</div>
       {/* Tax Incentives */}
+      <div className="modal-section">
       <p><strong>Tax Incentives:</strong> {selectedApplicant.tIGE}</p>
 
       {/* Business Activity */}
@@ -209,8 +227,11 @@ const handleApprove = async (id) => {
       <p><strong>Product/Service:</strong> {selectedApplicant.productService}</p>
       <p><strong>Units:</strong> {selectedApplicant.Units}</p>
       <p><strong>Capital:</strong> {selectedApplicant.capital}</p>
+</div>
+
 
       {/* Business Requirements */}
+      <div className="modal-section">
       <p><strong>Proof of Registration:</strong> {selectedApplicant.proofOfReg}</p>
       <p><strong>Proof of Right to Use Location:</strong> {selectedApplicant.proofOfRightToUseLoc}</p>
       <p><strong>Location Plan:</strong> {selectedApplicant.locationPlan}</p>
@@ -220,8 +241,10 @@ const handleApprove = async (id) => {
       <p><strong>Cedula:</strong> {selectedApplicant.cedula}</p>
       <p><strong>Photo (Interior):</strong> {selectedApplicant.photoOfBusinessEstInt}</p>
       <p><strong>Photo (Exterior):</strong> {selectedApplicant.photoOfBusinessEstExt}</p>
+</div>
 
       <div style={{ marginTop: "15px" }}>
+
         <button onClick={closeModal}>Close</button>
         <button onClick={() => handleApprove(selectedApplicant.id)}>Approve</button>
         <button onClick={closeModal}>Decline</button>

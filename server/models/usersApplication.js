@@ -163,10 +163,31 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
+    taxdec:{
+      type: DataTypes.STRING,
+    },
+
+    lessorName:{
+      type: DataTypes.STRING,
+    },
+
+    monthlyRent:{
+      type: DataTypes.STRING,
+    },
+
+
     //Tax Incentives from any Government Entity
 
     tIGE:{
         type: DataTypes.STRING,
+    },
+
+    tIGEfiles:{
+      type: DataTypes.STRING,
+    },
+
+    taxIncentives:{
+      type: DataTypes.STRING,
     },
 
     //business activity

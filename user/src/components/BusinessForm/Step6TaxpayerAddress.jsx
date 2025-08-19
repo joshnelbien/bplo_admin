@@ -154,8 +154,8 @@ export default function Step6TaxpayerAddress({ form, handleChange }) {
             Tax Declaration No.
             <input
               type="text"
-              name="OwnerPinAddress"
-              value={form.OwnerPinAddress || ""}
+              name="taxdec"
+              value={form.taxdec || ""}
               onChange={handleChange}
             />
           </label>
@@ -182,8 +182,8 @@ export default function Step6TaxpayerAddress({ form, handleChange }) {
   Monthly Rental
   <input
     type="text"
-    name="monthlyRental"
-    value={form.monthlyRental || ""}
+    name="monthlyRent"
+    value={form.monthlyRent || ""}
     onChange={handleChange}
   />
 </label>
@@ -192,8 +192,8 @@ export default function Step6TaxpayerAddress({ form, handleChange }) {
   Tax Declaration No.
   <input
     type="text"
-    name="taxDeclarationNo"
-    value={form.taxDeclarationNo || ""}
+    name="taxdec"
+    value={form.taxdec || ""}
     onChange={handleChange}
   />
 </label>

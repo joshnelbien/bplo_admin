@@ -54,7 +54,11 @@ function NewApp() {
     TaxzipCode: "",
     TaxpinAddress: "",
     ownPlace: "",
+    taxdec:"",
+    lessorName:"",
+    monthlyRent:"",
     tIGE: "",
+    tIGEfiles:"",
     officeType: "",
     lineOfBusiness: "",
     productService: "",
@@ -145,6 +149,7 @@ function NewApp() {
   if (step === 7) {
     return !(
       form.tIGE.trim() !== "" &&
+  
       form.officeType.trim() !== "" &&
       form.lineOfBusiness.trim() !== "" &&
       form.productService.trim() !== "" &&

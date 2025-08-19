@@ -512,3 +512,23 @@
 .modal-content::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.modal-section {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Section title */
+.modal-section h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #444;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+}
