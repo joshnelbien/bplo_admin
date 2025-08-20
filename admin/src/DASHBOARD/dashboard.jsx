@@ -1,13 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+
 import Side_bar from '../SIDE_BAR/side_bar';
-import Nav from '../NAV/nav';
 import "./dashboard.css";
 
 
 function Dashboard() {
     return (
         <>
-            <Nav />
+   
             <Side_bar />
 
             <div id="main_content">

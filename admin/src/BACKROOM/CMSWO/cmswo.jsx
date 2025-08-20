@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Nav from "../../NAV/nav";
+
 import Side_bar from "../../SIDE_BAR/side_bar";
 import "./cmswo.css";
 
@@ -76,7 +76,7 @@ function Cmswo() {
 
   return (
     <>
-      <Nav />
+
       <Side_bar />
       <div id="main_content">
         <h2>CMSWO</h2>

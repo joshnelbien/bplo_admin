@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Nav from "../../NAV/nav";
+
 import Side_bar from "../../SIDE_BAR/side_bar";
 import "./zoning.css";
 import ZoningCert from "./zoningCert"; //
@@ -11,6 +11,7 @@ function Zoning() {
   const [maxPageButtons, setMaxPageButtons] = useState(
     window.innerWidth <= 600 ? 7 : 10
   );
+  
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
@@ -79,7 +80,7 @@ function Zoning() {
 
   return (
     <>
-      <Nav />
+
       <Side_bar />
       <div id="main_content">
         <h2>ZONING</h2>

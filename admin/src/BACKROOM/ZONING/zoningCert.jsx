@@ -21,6 +21,7 @@ function getFilipinoMonth(monthIndex) {
 }
 
 // Compute zoning fee based on capital
+
 function calculateZoningFee(capital) {
   if (capital <= 5000) {
     return "Exempted";
@@ -34,6 +35,8 @@ function calculateZoningFee(capital) {
     return ((capital - 100000) * 0.001 + 500).toFixed(2);
   }
 }
+
+
 
 function ZoningCert({ applicant }) {
   const today = new Date();
@@ -57,7 +60,7 @@ function ZoningCert({ applicant }) {
       </p>
       <p>
         nakatala sa pangalan ni <u><b>{applicant.firstName} {applicant.lastName}</b></u> ay
-        nakakasakop sa sonang nakatalaga sa/o para gamiting RES/COMM/IND/AGRI/INS,
+        nakakasakop sa sonang nakatalaga sa/o para gamiting <u><b>RES/COMM/IND/AGRI/INS</b></u>,
       </p>
       <p>
         dahil dito ang pagtatayo ng <u><b>{applicant.BusinessType}</b></u> ay maaaring
@@ -79,12 +82,13 @@ function ZoningCert({ applicant }) {
       <p>Renew</p>
 
       <p>For:</p>
-      <p>HON. ARCADIO B. GAOANGADA, MNSA</p>
+      <p>HON. ARCADIO B. GAPANGADA, MNSA</p>
       <p>City Mayor</p>
 
       <button onClick={() => window.print()}>Print Certificate</button>
     </div>
   );
 }
+
 
 export default ZoningCert;
