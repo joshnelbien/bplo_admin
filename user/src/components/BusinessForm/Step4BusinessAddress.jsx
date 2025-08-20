@@ -1,21 +1,93 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Step4BusinessAddress({ form, handleChange }) {
-  const [barangayOptions, setBarangayOptions] = useState([]);
+  // ✅ Hardcoded San Pablo City barangays (replace/add as needed)
+
+  
+  const barangays = [
+              "ATISAN",
+              "BAGONG BAYAN II-A (POB.)",
+              "BAGONG POOK VI-C (POB.)",
+              "BARANGAY I-A (POB.)",
+              "BARANGAY I-B (POB.)",
+              "BARANGAY II-A (POB.)",
+              "BARANGAY II-B (POB.)",
+              "BARANGAY II-C (POB.)",
+              "BARANGAY II-D (POB.)",
+              "BARANGAY II-E (POB.)",
+              "BARANGAY II-F (POB.)",
+              "BARANGAY III-A (POB.)",
+              "BARANGAY III-B (POB.)",
+              "BARANGAY III-C (POB.)",
+              "BARANGAY III-D (POB.)",
+              "BARANGAY III-E (POB.)",
+              "BARANGAY III-F (POB.)",
+              "BARANGAY IV-A (POB.)",
+              "BARANGAY IV-B (POB.)",
+              "BARANGAY IV-C (POB.)",
+              "BARANGAY V-A (POB.)",
+              "BARANGAY V-B (POB.)",
+              "BARANGAY V-C (POB.)",
+              "BARANGAY V-D (POB.)",
+              "BARANGAY VI-A (POB.)",
+              "BARANGAY VI-B (POB.)",
+              "BARANGAY VI-D (POB.)",
+              "BARANGAY VI-E (POB.)",
+              "BARANGAY VII-A (POB.)",
+              "BARANGAY VII-B (POB.)",
+              "BARANGAY VII-C (POB.)",
+              "BARANGAY VII-D (POB.)",
+              "BARANGAY VII-E (POB.)",
+              "BAUTISTA",
+              "CONCEPCION",
+              "DEL REMEDIO",
+              "DOLORES",
+              "SAN ANTONIO 1",
+              "SAN ANTONIO 2",
+              "SAN BARTOLOME",
+              "SAN BUENAVENTURA",
+              "SAN CRISPIN",
+              "SAN CRISTOBAL",
+              "SAN DIEGO",
+              "SAN FRANCISCO",
+              "SAN GABRIEL",
+              "SAN GREGORIO",
+              "SAN IGNACIO",
+              "SAN ISIDRO",
+              "SAN JOAQUIN",
+              "SAN JOSE",
+              "SAN JUAN",
+              "SAN LORENZO",
+              "SAN LUCAS 1",
+              "SAN LUCAS 2",
+              "SAN MARCOS",
+              "SAN MATEO",
+              "SAN MIGUEL",
+              "SAN NICOLAS",
+              "SAN PEDRO",
+              "SAN RAFAEL",
+              "SAN ROQUE",
+              "SAN VICENTE",
+              "SANTA ANA",
+              "SANTA CATALINA",
+              "SANTA CRUZ",
+              "SANTA ELENA",
+              "SANTA FELOMINA",
+              "SANTA ISABEL",
+              "SANTA MARIA",
+              "SANTA MARIA MAGDALENA",
+              "SANTA MONICA",
+              "SANTA VERONICA",
+              "SANTIAGO I",
+              "SANTIAGO II",
+              "SANTISIMO ROSARIO",
+              "SANTO ANGEL",
+              "SANTO CRISTO",
+              "SANTO NIÑO",
+              "SOLEDAD"
+  ];
 
   useEffect(() => {
-    fetch("/psgc.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const barangays =
-          data["REGION IV-A"]?.province_list["LAGUNA"]?.municipality_list[
-            "SAN PABLO CITY"
-          ]?.barangay_list || [];
-
-        setBarangayOptions(barangays);
-      })
-      .catch((err) => console.error("Error loading PSGC:", err));
-
     // Auto-set fixed values if not set
     if (!form.region || !form.province || !form.cityOrMunicipality) {
       handleChange({ target: { name: "region", value: "REGION IV-A" } });
@@ -51,7 +123,7 @@ export default function Step4BusinessAddress({ form, handleChange }) {
         Barangay
         <select name="barangay" value={form.barangay} onChange={handleChange}>
           <option value="">Select Barangay</option>
-          {barangayOptions.map((brgy) => (
+          {barangays.map((brgy) => (
             <option key={brgy} value={brgy}>
               {brgy}
             </option>

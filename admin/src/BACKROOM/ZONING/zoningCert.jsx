@@ -88,7 +88,7 @@ function ZoningCert({ applicant }) {
               {applicant.firstName} {applicant.lastName}
             </u>
           </b>{" "}
-          ay nakakasakop sa sonang nakatalaga sa/o para gamiting{" "}
+          ay nakakasakop sa SONANG nakatalaga sa/o para gamiting{" "}
           <b>
             <u>RES/COMM/IND/AGRI/INS</u>
           </b>
@@ -96,7 +96,11 @@ function ZoningCert({ applicant }) {
           <b>
             <u>{applicant.BusinessType}</u>
           </b>{" "}
-          ay maaaring pahintulutan... Ipinagkaloob ngayon ika-
+          ay maaaring pahintulutan at pasubaling babawiin o patitigilin sa sandaling 
+          mapatunayan naglalagay ng panganib sa PANGMADLANG KALUSUGAN AT KALIGTASAN 
+          </Typography>
+          <Typography>
+           Ipinagkaloob ngayon ika-
           <b>
             <u>{day}</u>
           </b>{" "}
