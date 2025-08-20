@@ -1,4 +1,4 @@
-export default function Step8BusinessRequirements({ form, handleFileChange }) {
+export default function Step8BusinessRequirements({ handleFileChange }) {
   return (
     <section>
       <h2>Business Requirements</h2>
@@ -8,7 +8,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
         <input
           type="file"
           name="proofOfReg"
-          onChange={form.andleFileChange}
+          onChange={handleFileChange}
         />
       </label>
 
@@ -17,7 +17,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
         <input
           type="file"
           name="proofOfRightToUseLoc"
-          onChange={form.handleFileChange}
+          onChange={handleFileChange}
         />
       </label>
 
@@ -26,7 +26,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
         <input
           type="file"
           name="locationPlan"
-          onChange={form.handleFileChange}
+          onChange={handleFileChange}
         />
       </label>
 
@@ -35,7 +35,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
         <input
           type="file"
           name="brgyClearance"
-          onChange={form.handleFileChange}
+          onChange={handleFileChange}
         />
       </label>
 
@@ -44,7 +44,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
         <input
           type="file"
           name="marketClearance"
-          onChange={form.handleFileChange}
+          onChange={handleFileChange}
         />
       </label>
 
@@ -62,7 +62,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
         <input
           type="file"
           name="cedula"
-          onChange={form.handleFileChange}
+          onChange={handleFileChange}
         />
       </label>
 
@@ -72,7 +72,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
           type="file"
           name="photoOfBusinessEstInt"
           accept="image/*"
-          onChange={form.handleFileChange}
+          onChange={handleFileChange}
         />
       </label>
 
@@ -82,7 +82,7 @@ export default function Step8BusinessRequirements({ form, handleFileChange }) {
           type="file"
           name="photoOfBusinessEstExt"
           accept="image/*"
-          onChange={form.handleFileChange}
+          onChange={handleFileChange}
         />
       </label>
     </section>

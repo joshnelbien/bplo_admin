@@ -1,15 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import Side_bar from "../../SIDE_BAR/side_bar";
-import "./cmswo.css";
+import ApplicantModal from "./cmswo_modal";
+
+import {
+  Box,
+  Pagination,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
+} from "@mui/material";
 
 function Cmswo() {
   const [applicants, setApplicants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [maxPageButtons, setMaxPageButtons] = useState(
-    window.innerWidth <= 600 ? 7 : 10
-  );
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const recordsPerPage = 20;
@@ -25,14 +34,6 @@ function Cmswo() {
     };
 
     fetchApplicants();
-
-    
-    const handleResize = () => {
-      setMaxPageButtons(window.innerWidth <= 600 ? 7 : 10);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const totalPages = Math.ceil(applicants.length / recordsPerPage);
@@ -43,25 +44,19 @@ function Cmswo() {
     indexOfLastRecord
   );
 
-  const getPageNumbers = () => {
-    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-    let endPage = startPage + maxPageButtons - 1;
-
-    if (endPage > totalPages) {
-      endPage = totalPages;
-      startPage = Math.max(1, endPage - maxPageButtons + 1);
+  const handleApprove = async (id) => {
+    try {
+      await axios.post("http://localhost:5000/backroom", { id });
+      setApplicants((prev) => prev.filter((applicant) => applicant.id !== id));
+      alert("Applicant approved and moved to backroom");
+      closeModal();
+    } catch (error) {
+      console.error("Error approving applicant:", error);
     }
-
-    return Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-    );
   };
 
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   const openModal = (applicant) => {
@@ -76,103 +71,62 @@ function Cmswo() {
 
   return (
     <>
-
       <Side_bar />
-      <div id="main_content">
-        <h2>CMSWO</h2>
+      <Box id="main_content" sx={{ p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          CMSWO
+        </Typography>
 
-        <table className="custom-table">
-          <thead>
-            <tr>
-              <th>Applicant ID</th>
-              <th>Business Name</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentRecords.map((applicant) => (
-              <tr
-                key={applicant.id}
-                onClick={() => openModal(applicant)}
-                style={{ cursor: "pointer" }}
-              >
-                <td>{applicant.id}</td>
-                <td>{applicant.businessName}</td>
-                <td>{applicant.firstName}</td>
-                <td>{applicant.lastName}</td>
-                <td>{applicant.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {/* ✅ Table */}
+        <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 3 }}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
+                <TableCell><strong>Applicant ID</strong></TableCell>
+                <TableCell><strong>Business Name</strong></TableCell>
+                <TableCell><strong>First Name</strong></TableCell>
+                <TableCell><strong>Last Name</strong></TableCell>
+                <TableCell><strong>Status</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentRecords.map((applicant) => (
+                <TableRow
+                  key={applicant.id}
+                  hover
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => openModal(applicant)}
+                >
+                  <TableCell>{applicant.id}</TableCell>
+                  <TableCell>{applicant.businessName}</TableCell>
+                  <TableCell>{applicant.firstName}</TableCell>
+                  <TableCell>{applicant.lastName}</TableCell>
+                  <TableCell>{applicant.status}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-        <div className="pagination">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          {getPageNumbers().map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={currentPage === page ? "active" : ""}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
-      </div>
+        {/* ✅ Pagination */}
+        <Box display="flex" justifyContent="center" mt={3}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            shape="rounded"
+          />
+        </Box>
+      </Box>
 
-      {isModalOpen && selectedApplicant && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Applicant Details</h3>
-
-             <p>
-              <strong>Status:</strong> {selectedApplicant.status}
-            </p>
-
-            <p>
-              <strong>ID:</strong> {selectedApplicant.id}
-            </p>
-            <p>
-              <strong>Business Name:</strong> {selectedApplicant.businessName}
-            </p>
-            <p>
-              <strong>Business Type:</strong> {selectedApplicant.BusinessType}
-            </p>
-            <p>
-              <strong>Trade Name:</strong> {selectedApplicant.TradeName}
-            </p>
-            <p>
-              <strong>First Name:</strong> {selectedApplicant.firstName}
-            </p>
-            <p>
-              <strong>Last Name:</strong> {selectedApplicant.lastName}
-            </p>
-            <p>
-              <strong>DSC Registration No:</strong> {selectedApplicant.dscRegNo}
-            </p>
-            <p>
-              <strong>TIN Number:</strong> {selectedApplicant.tinNo}
-            </p>
-            {/* Add other fields here if needed */}
-            <button onClick={closeModal}>Close</button>
-            <button onClick={closeModal}>Approved</button>
-            <button onClick={closeModal}>Decline</button>
-          </div>
-        </div>
-      )}
+      {/* ✅ Modal Component */}
+      <ApplicantModal
+        applicant={selectedApplicant}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onApprove={handleApprove}
+      />
     </>
   );
 }

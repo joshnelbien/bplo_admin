@@ -1,7 +1,6 @@
-// ZoningCert.jsx
-import "./zoning.css";
+import { Box, Button, Checkbox, Paper, Typography } from "@mui/material";
 
-// Convert month number to Filipino month name
+// ✅ Convert month number to Filipino month name
 function getFilipinoMonth(monthIndex) {
   const months = [
     "Enero",
@@ -20,8 +19,7 @@ function getFilipinoMonth(monthIndex) {
   return months[monthIndex];
 }
 
-// Compute zoning fee based on capital
-
+// ✅ Compute zoning fee based on capital
 function calculateZoningFee(capital) {
   if (capital <= 5000) {
     return "Exempted";
@@ -36,8 +34,6 @@ function calculateZoningFee(capital) {
   }
 }
 
-
-
 function ZoningCert({ applicant }) {
   const today = new Date();
   const day = today.getDate();
@@ -47,48 +43,120 @@ function ZoningCert({ applicant }) {
   const zoningFee = calculateZoningFee(applicant.capital);
 
   return (
-    <div className="zoning-certificate">
-      <h2>CITY MAYOR'S OFFICE</h2>
-      <h3>San Pablo City</h3>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        mt: 3,
+        mb: 3,
+      }}
+    >
+      <Paper
+        elevation={6}
+        sx={{
+          width: "800px",
+          p: 5,
+          border: "2px solid black",
+          borderRadius: 2,
+          position: "relative",
+        }}
+      >
+        {/* Header */}
+        <Box textAlign="center" mb={3}>
+          <Typography variant="h5" fontWeight="bold">
+            CITY MAYOR'S OFFICE
+          </Typography>
+          <Typography variant="h6">San Pablo City</Typography>
+          <Typography variant="h5" fontWeight="bold">
+            ZONING AND LAND USE DIVISION
+          </Typography>
+          <Typography variant="h6" sx={{ mt: 1 }}>
+            PAGPAPATUNAY
+          </Typography>
+        </Box>
 
-      <h2>ZONING AND LAND USE DIVISION</h2>
-      <h3>PAGPAPATUNAY</h3>
+        {/* Certificate Body */}
+        <Typography paragraph sx={{ textAlign: "justify", mb: 2 }}>
+          ITO AY PAGPAPATUNAY na ang isang lugar na lupang matatagpuan sa
+          barangay{" "}
+          <b>
+            <u>{applicant.barangay}</u>
+          </b>
+          , San Pablo City, nakatala sa pangalan ni{" "}
+          <b>
+            <u>
+              {applicant.firstName} {applicant.lastName}
+            </u>
+          </b>{" "}
+          ay nakakasakop sa sonang nakatalaga sa/o para gamiting{" "}
+          <b>
+            <u>RES/COMM/IND/AGRI/INS</u>
+          </b>
+          , dahil dito ang pagtatayo ng{" "}
+          <b>
+            <u>{applicant.BusinessType}</u>
+          </b>{" "}
+          ay maaaring pahintulutan... Ipinagkaloob ngayon ika-
+          <b>
+            <u>{day}</u>
+          </b>{" "}
+          ng{" "}
+          <b>
+            <u>{month}</u>
+          </b>
+          ,{" "}
+          <b>
+            <u>{year}</u>
+          </b>{" "}
+          kaugnay ng kanyang kahilingan para sa MAYOR'S PERMIT.
+        </Typography>
 
-      <p>
-        ITO AY PAGPAPATUNAY na ang isang lugar na lupang matatagpuan sa barangay{" "}
-        <u><b>{applicant.barangay}</b></u> San Pablo City,
-      </p>
-      <p>
-        nakatala sa pangalan ni <u><b>{applicant.firstName} {applicant.lastName}</b></u> ay
-        nakakasakop sa sonang nakatalaga sa/o para gamiting <u><b>RES/COMM/IND/AGRI/INS</b></u>,
-      </p>
-      <p>
-        dahil dito ang pagtatayo ng <u><b>{applicant.BusinessType}</b></u> ay maaaring
-        pahintulutan...
-      </p>
+        <Typography variant="subtitle1" sx={{ mt: 2 }}>
+          CAPITAL: P
+          <b>
+            <u>{applicant.capital}</u>
+          </b>
+        </Typography>
+        <Typography variant="subtitle1" sx={{ mb: 3 }}>
+          ZONING FEE:{" "}
+          <b>
+            <u>{zoningFee === "Exempted" ? zoningFee : `P${zoningFee}`}</u>
+          </b>
+        </Typography>
 
-      <p>
-        Ipinagkaloob ngayon ika-<u><b>{day}</b></u> ng <u><b>{month}</b></u>, <u><b>{year}</b></u> kaugnay ng kanyang
-        kahilingan para sa MAYOR'S PERMIT
-      </p>
+        <Box display="flex" gap={5} mb={3} alignItems="center">
+          <Box display="flex" alignItems="center" gap={1}>
+            <Checkbox defaultChecked />
+            <Typography>New</Typography>
+          </Box>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Checkbox />
+            <Typography>Renew</Typography>
+          </Box>
+        </Box>
 
-      <p>CAPITAL: P<u><b>{applicant.capital}</b></u></p>
-      <p>
-        ZONING FEE:{" "}
-        <u><b>{zoningFee === "Exempted" ? zoningFee : `P${zoningFee}`}</b></u>
-      </p>
+        {/* Signature Section */}
+        <Box mt={5} textAlign="right">
+          <Typography variant="body1">For:</Typography>
+          <Typography variant="body1" fontWeight="bold">
+            HON. ARCADIO B. GAPANGADA, MNSA
+          </Typography>
+          <Typography variant="body2">City Mayor</Typography>
+        </Box>
 
-      <p>New</p>
-      <p>Renew</p>
-
-      <p>For:</p>
-      <p>HON. ARCADIO B. GAPANGADA, MNSA</p>
-      <p>City Mayor</p>
-
-      <button onClick={() => window.print()}>Print Certificate</button>
-    </div>
+        {/* Print Button */}
+        <Box mt={5} display="flex" justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => window.print()}
+          >
+            Print Certificate
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
-
 
 export default ZoningCert;

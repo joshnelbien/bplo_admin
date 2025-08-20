@@ -16,6 +16,7 @@ app.use("/api/newapplication", require("./routes/applicationRoutes"));
 app.use("/api/renewapplication", require("./routes/renewApplicationRoutes"));
 
 
+
 // Track Supabase connection status
 let isSupabaseConnected = false;
 

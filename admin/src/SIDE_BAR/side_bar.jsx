@@ -1,19 +1,19 @@
 import WifiIcon from "@mui/icons-material/Wifi";
 import WifiOffIcon from "@mui/icons-material/WifiOff";
 import {
-    AppBar,
-    Box,
-    Chip,
-    Divider,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemText,
-    Toolbar,
-    Typography,
-    useMediaQuery,
+  AppBar,
+  Box,
+  Chip,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -87,7 +87,7 @@ function Side_bar() {
             icon={isOnline ? <WifiIcon /> : <WifiOffIcon />}
             label={isOnline ? "Online" : "Offline"}
             color={isOnline ? "success" : "default"}
-            variant="outlined"
+            variant="contained"
           />
         </Toolbar>
       </AppBar>

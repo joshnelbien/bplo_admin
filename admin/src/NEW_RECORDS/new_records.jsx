@@ -1,14 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Side_bar from "../SIDE_BAR/side_bar";
-import "./new_records.css";
+import ApplicantModal from "./newApp_modal";
+
+import {
+  Box,
+  Pagination,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
+} from "@mui/material";
 
 function New_records() {
   const [applicants, setApplicants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [maxPageButtons, setMaxPageButtons] = useState(
-    window.innerWidth <= 600 ? 7 : 10
-  );
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const recordsPerPage = 20;
@@ -24,14 +34,6 @@ function New_records() {
     };
 
     fetchApplicants();
-
-    
-    const handleResize = () => {
-      setMaxPageButtons(window.innerWidth <= 600 ? 7 : 10);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const totalPages = Math.ceil(applicants.length / recordsPerPage);
@@ -42,36 +44,19 @@ function New_records() {
     indexOfLastRecord
   );
 
-  const getPageNumbers = () => {
-    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-    let endPage = startPage + maxPageButtons - 1;
-
-    if (endPage > totalPages) {
-      endPage = totalPages;
-      startPage = Math.max(1, endPage - maxPageButtons + 1);
+  const handleApprove = async (id) => {
+    try {
+      await axios.post("http://localhost:5000/backroom", { id });
+      setApplicants((prev) => prev.filter((applicant) => applicant.id !== id));
+      alert("Applicant approved and moved to backroom");
+      closeModal();
+    } catch (error) {
+      console.error("Error approving applicant:", error);
     }
-
-    return Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-    );
   };
 
-const handleApprove = async (id) => {
-  try {
-    await axios.post("http://localhost:5000/backroom", { id });
-    setApplicants((prev) => prev.filter((applicant) => applicant.id !== id));
-    alert("Applicant approved and moved to backroom");
-    closeModal();
-  } catch (error) {
-    console.error("Error approving applicant:", error);
-  }
-};
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   const openModal = (applicant) => {
@@ -86,171 +71,62 @@ const handleApprove = async (id) => {
 
   return (
     <>
-
       <Side_bar />
-      <div id="main_content">
-        <h2>New Records</h2>
+      <Box id="main_content" sx={{ p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          New Records
+        </Typography>
 
-        <table className="custom-table">
-          <thead>
-            <tr>
-              <th>Applicant ID</th>
-              <th>Business Name</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentRecords.map((applicant) => (
-              <tr
-                key={applicant.id}
-                onClick={() => openModal(applicant)}
-                style={{ cursor: "pointer" }}
-              >
-                <td>{applicant.id}</td>
-                <td>{applicant.businessName}</td>
-                <td>{applicant.firstName}</td>
-                <td>{applicant.lastName}</td>
-                <td>{applicant.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {/* ✅ Table */}
+        <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 3 }}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
+                <TableCell><strong>Applicant ID</strong></TableCell>
+                <TableCell><strong>Business Name</strong></TableCell>
+                <TableCell><strong>First Name</strong></TableCell>
+                <TableCell><strong>Last Name</strong></TableCell>
+                <TableCell><strong>Status</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentRecords.map((applicant) => (
+                <TableRow
+                  key={applicant.id}
+                  hover
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => openModal(applicant)}
+                >
+                  <TableCell>{applicant.id}</TableCell>
+                  <TableCell>{applicant.businessName}</TableCell>
+                  <TableCell>{applicant.firstName}</TableCell>
+                  <TableCell>{applicant.lastName}</TableCell>
+                  <TableCell>{applicant.status}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-        <div className="pagination">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          {getPageNumbers().map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={currentPage === page ? "active" : ""}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
-      </div>
+        {/* ✅ Pagination */}
+        <Box display="flex" justifyContent="center" mt={3}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            shape="rounded"
+          />
+        </Box>
+      </Box>
 
-      {isModalOpen && selectedApplicant && (
-  <div className="modal-overlay" onClick={closeModal}>
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-      <h3>Applicant Details</h3>
-
-      {/* Business Information */}
-
-      <div className="modal-section">
-      <p><strong>Status:</strong> {selectedApplicant.status}</p>
-      <p><strong>ID:</strong> {selectedApplicant.id}</p>
-      <p><strong>Business Type:</strong> {selectedApplicant.BusinessType}</p>
-      <p><strong>DSC Registration No:</strong> {selectedApplicant.dscRegNo}</p>
-      <p><strong>Business Name:</strong> {selectedApplicant.businessName}</p>
-      <p><strong>TIN No:</strong> {selectedApplicant.tinNo}</p>
-      <p><strong>Trade Name:</strong> {selectedApplicant.TradeName}</p>
-</div>
-
-
-      {/* Personal Information */}
-      <div className="modal-section">
-      <p><strong>First Name:</strong> {selectedApplicant.firstName}</p>
-      <p><strong>Middle Name:</strong> {selectedApplicant.middleName}</p>
-      <p><strong>Last Name:</strong> {selectedApplicant.lastName}</p>
-      <p><strong>Extension Name:</strong> {selectedApplicant.extName}</p>
-      <p><strong>Sex:</strong> {selectedApplicant.sex}</p>
-</div>
-
-
-      {/* Contact Information */}
-      <div className="modal-section">
-      <p><strong>Email:</strong> {selectedApplicant.eMailAdd}</p>
-      <p><strong>Telephone No:</strong> {selectedApplicant.telNo}</p>
-      <p><strong>Mobile No:</strong> {selectedApplicant.mobileNo}</p>
-</div>
-
-
-      {/* Business Address */}
-      <div className="modal-section">
-      <p><strong>Region:</strong> {selectedApplicant.region}</p>
-      <p><strong>Province:</strong> {selectedApplicant.province}</p>
-      <p><strong>City/Municipality:</strong> {selectedApplicant.cityOrMunicipality}</p>
-      <p><strong>Barangay:</strong> {selectedApplicant.barangay}</p>
-      <p><strong>Address Line 1:</strong> {selectedApplicant.addressLine1}</p>
-      <p><strong>Zip Code:</strong> {selectedApplicant.zipCode}</p>
-      <p><strong>Pin Address:</strong> {selectedApplicant.pinAddress}</p>
-</div>
-
-
-      {/* Business Operation */}
-      <div className="modal-section">
-      <p><strong>Total Floor Area:</strong> {selectedApplicant.totalFloorArea}</p>
-      <p><strong>Number of Employees:</strong> {selectedApplicant.numberOfEmployee}</p>
-      <p><strong>Male Employees:</strong> {selectedApplicant.maleEmployee}</p>
-      <p><strong>Female Employees:</strong> {selectedApplicant.femaleEmployee}</p>
-      <p><strong>Number of Vans:</strong> {selectedApplicant.numVehicleVan}</p>
-      <p><strong>Number of Trucks:</strong> {selectedApplicant.numVehicleTruck}</p>
-      <p><strong>Number of Motorcycles:</strong> {selectedApplicant.numVehicleMotor}</p>
-      <p><strong>No. of Nozzles:</strong> {selectedApplicant.numNozzle}</p>
-      <p><strong>Weigh Scale:</strong> {selectedApplicant.weighScale}</p>
-</div>
-
-
-      {/* Tax Payers Address */}
-      <div className="modal-section">
-      <p><strong>Tax Region:</strong> {selectedApplicant.Taxregion}</p>
-      <p><strong>Tax Province:</strong> {selectedApplicant.Taxprovince}</p>
-      <p><strong>Tax City/Municipality:</strong> {selectedApplicant.TaxcityOrMunicipality}</p>
-      <p><strong>Tax Barangay:</strong> {selectedApplicant.Taxbarangay}</p>
-      <p><strong>Tax Address Line 1:</strong> {selectedApplicant.TaxaddressLine1}</p>
-      <p><strong>Tax Zip Code:</strong> {selectedApplicant.TaxzipCode}</p>
-      <p><strong>Tax Pin Address:</strong> {selectedApplicant.TaxpinAddress}</p>
-      <p><strong>Own Place:</strong> {selectedApplicant.ownPlace}</p>
-</div>
-      {/* Tax Incentives */}
-      <div className="modal-section">
-      <p><strong>Tax Incentives:</strong> {selectedApplicant.tIGE}</p>
-
-      {/* Business Activity */}
-      <p><strong>Office Type:</strong> {selectedApplicant.officeType}</p>
-      <p><strong>Line of Business:</strong> {selectedApplicant.lineOfBusiness}</p>
-      <p><strong>Product/Service:</strong> {selectedApplicant.productService}</p>
-      <p><strong>Units:</strong> {selectedApplicant.Units}</p>
-      <p><strong>Capital:</strong> {selectedApplicant.capital}</p>
-</div>
-
-
-      {/* Business Requirements */}
-      <div className="modal-section">
-      <p><strong>Proof of Registration:</strong> {selectedApplicant.proofOfReg}</p>
-      <p><strong>Proof of Right to Use Location:</strong> {selectedApplicant.proofOfRightToUseLoc}</p>
-      <p><strong>Location Plan:</strong> {selectedApplicant.locationPlan}</p>
-      <p><strong>Barangay Clearance:</strong> {selectedApplicant.brgyClearance}</p>
-      <p><strong>Market Clearance:</strong> {selectedApplicant.marketClearance}</p>
-      <p><strong>Occupancy Permit:</strong> {selectedApplicant.occupancyPermit}</p>
-      <p><strong>Cedula:</strong> {selectedApplicant.cedula}</p>
-      <p><strong>Photo (Interior):</strong> {selectedApplicant.photoOfBusinessEstInt}</p>
-      <p><strong>Photo (Exterior):</strong> {selectedApplicant.photoOfBusinessEstExt}</p>
-</div>
-
-      <div style={{ marginTop: "15px" }}>
-
-        <button onClick={closeModal}>Close</button>
-        <button onClick={() => handleApprove(selectedApplicant.id)}>Approve</button>
-        <button onClick={closeModal}>Decline</button>
-      </div>
-    </div>
-  </div>
-)}
+      {/* ✅ Modal Component */}
+      <ApplicantModal
+        applicant={selectedApplicant}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onApprove={handleApprove}
+      />
     </>
   );
 }

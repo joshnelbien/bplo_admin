@@ -54,42 +54,48 @@ function NewApp() {
     TaxzipCode: "",
     TaxpinAddress: "",
     ownPlace: "",
-    taxdec:"",
-    lessorName:"",
-    monthlyRent:"",
+    taxdec: "",
+    lessorName: "",
+    monthlyRent: "",
     tIGE: "",
-    tIGEfiles:"",
+    tIGEfiles: "",
     officeType: "",
     lineOfBusiness: "",
     productService: "",
     Units: "",
     capital: "",
-    proofOfReg: "",
-    proofOfRightToUseLoc: "",
-    locationPlan: "",
-    brgyClearance: "",
-    marketClearance: "",
-    occupancyPermit: "",
-    cedula: "",
-    photoOfBusinessEstInt: "",
-    photoOfBusinessEstExt: "",
+
+    
+    // 🔽 FILE FIELDS
+    proofOfReg: null,
+    proofOfRightToUseLoc: null,
+    locationPlan: null,
+    brgyClearance: null,
+    marketClearance: null,
+    occupancyPermit: null,
+    cedula: null,
+    photoOfBusinessEstInt: null,
+    photoOfBusinessEstExt: null,
     status: "pending",
   });
 
+  // text input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  // file input
   const handleFileChange = (e) => {
-  const { name, files } = e.target;
-  setForm((prev) => ({
-    ...prev,
-    [name]: files[0], // store the actual File object
-  }));
-};
+    const { name, files } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: files[0],
+    }));
+  };
 
- const isNextDisabled = () => {
+  // validation
+  const isNextDisabled = () => {
     if (step === 1) {
       return !(
         form.BusinessType &&
@@ -100,84 +106,83 @@ function NewApp() {
     }
 
     if (step === 2) {
-    return !(
-      form.firstName.trim() !== "" &&
-      form.lastName.trim() !== "" &&
-      form.sex.trim() !== ""
-    );
-  }
+      return !(
+        form.firstName.trim() !== "" &&
+        form.lastName.trim() !== "" &&
+        form.sex.trim() !== ""
+      );
+    }
 
-  if (step === 3) {
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.eMailAdd.trim());
-    return !(emailValid && form.mobileNo.trim() !== "");
-  }
+    if (step === 3) {
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.eMailAdd.trim());
+      return !(emailValid && form.mobileNo.trim() !== "");
+    }
 
-   if (step === 4) {
-    return !(
-      form.addressLine1.trim() !== "" &&
-      form.zipCode.trim() !== "" &&
-      form.pinAddress.trim() !== ""
-    );
-  }
+    if (step === 4) {
+      return !(
+        form.addressLine1.trim() !== "" &&
+        form.zipCode.trim() !== "" &&
+        form.pinAddress.trim() !== ""
+      );
+    }
 
     if (step === 5) {
-    return !(
-      form.totalFloorArea.trim() !== "" &&
-      form.numberOfEmployee.trim() !== "" &&
-      form.maleEmployee.trim() !== "" &&
-      form.femaleEmployee.trim() !== "" &&
-      form.numVehicleVan.trim() !== "" &&
-      form.numVehicleTruck.trim() !== "" &&
-      form.numVehicleMotor.trim() !== "" &&
-      form.numNozzle.trim() !== "" &&
-      form.weighScale.trim() !== ""
-    );
-  }
+      return !(
+        form.totalFloorArea.trim() !== "" &&
+        form.numberOfEmployee.trim() !== "" &&
+        form.maleEmployee.trim() !== "" &&
+        form.femaleEmployee.trim() !== "" &&
+        form.numVehicleVan.trim() !== "" &&
+        form.numVehicleTruck.trim() !== "" &&
+        form.numVehicleMotor.trim() !== "" &&
+        form.numNozzle.trim() !== "" &&
+        form.weighScale.trim() !== ""
+      );
+    }
 
-  if (step === 6) {
-    return !(
-      form.Taxregion.trim() !== "" &&
-      form.Taxprovince.trim() !== "" &&
-      form.TaxcityOrMunicipality.trim() !== "" &&
-      form.Taxbarangay.trim() !== "" &&
-      form.TaxaddressLine1.trim() !== "" &&
-      form.TaxzipCode.trim() !== "" &&
-      form.TaxpinAddress.trim() !== ""
-    );
-  }
+    if (step === 6) {
+      return !(
+        form.Taxregion.trim() !== "" &&
+        form.Taxprovince.trim() !== "" &&
+        form.TaxcityOrMunicipality.trim() !== "" &&
+        form.Taxbarangay.trim() !== "" &&
+        form.TaxaddressLine1.trim() !== "" &&
+        form.TaxzipCode.trim() !== "" &&
+        form.TaxpinAddress.trim() !== ""
+      );
+    }
 
-  // if (step === 7) {
-  //   return !(
+    if (step === 8) {
+      return !(
+        form.tIGE.trim() !== "" &&
+        form.officeType.trim() !== "" &&
+        form.lineOfBusiness.trim() !== "" &&
+        form.productService.trim() !== "" &&
+        form.Units.trim() !== "" &&
+        form.capital.trim() !== ""
+      );
+    }
 
-
-  //     form.officeType.trim() !== "" &&
-  //     form.lineOfBusiness.trim() !== "" &&
-  //     form.productService.trim() !== "" &&
-  //     form.Units.trim() !== "" &&
-  //     form.capital.trim() !== "" 
-  //   );
-  // }
-
-   if (step === 8) {
-    return !(
-      form.tIGE.trim() !== "" &&
-      form.officeType.trim() !== "" &&
-      form.lineOfBusiness.trim() !== "" &&
-      form.productService.trim() !== "" &&
-      form.Units.trim() !== "" &&
-      form.capital.trim() !== "" 
-    );
-  }
-
-    // Add similar checks for other steps if needed
     return false;
   };
 
-
+  // submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/new", form);
+      const formData = new FormData();
+
+      Object.keys(form).forEach((key) => {
+        const value = form[key];
+        if (value !== null && value !== "") {
+          formData.append(key, value);
+        }
+      });
+
+      const response = await axios.post("http://localhost:5000/new", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       alert("Form submitted successfully!");
       console.log(response.data);
       navigate("/home");
@@ -194,17 +199,14 @@ function NewApp() {
       </button>
 
       <div className="progress-container">
-  <div className="progress-text">
-    Step {step} / 8
-  </div>
-  <div className="progress-bar">
-    <div
-      className="progress-fill"
-      style={{ width: `${(step / 8) * 100}%` }}
-    ></div>
-  </div>
-</div>
-
+        <div className="progress-text">Step {step} / 8</div>
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{ width: `${(step / 8) * 100}%` }}
+          ></div>
+        </div>
+      </div>
 
       <h1>Business Application Form</h1>
       <form onSubmit={handleSubmit}>
@@ -224,15 +226,15 @@ function NewApp() {
             </button>
           )}
           {step < 8 && (
-            <button type="button" onClick={() => setStep(step + 1)}disabled={isNextDisabled()} >
+            <button
+              type="button"
+              onClick={() => setStep(step + 1)}
+              disabled={isNextDisabled()}
+            >
               Next
             </button>
           )}
-          {step === 8 && (
-            <button type="submit">
-              Submit Form
-            </button>
-          )}
+          {step === 8 && <button type="submit">Submit Form</button>}
         </div>
       </form>
     </div>
