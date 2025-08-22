@@ -7,8 +7,10 @@ app.use(cors());
 app.use(express.json());
 
 // Local DB routes
-app.use("/new", require("./routes/user.routes"));
+app.use("/new", require("./routes/newApplicationLocalroutes"));
 app.use("/renew", require("./routes/renew.routes"));
+
+
 app.use("/backroom", require("./routes/backroom"));
 
 // Cloud DB routes

@@ -26,7 +26,7 @@ function New_records() {
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/new");
+        const res = await axios.get("http://localhost:5000/api/files");
         setApplicants(res.data);
       } catch (error) {
         console.error("Error fetching applicants:", error);
@@ -82,7 +82,6 @@ function New_records() {
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
-                <TableCell><strong>Applicant ID</strong></TableCell>
                 <TableCell><strong>Business Name</strong></TableCell>
                 <TableCell><strong>First Name</strong></TableCell>
                 <TableCell><strong>Last Name</strong></TableCell>
@@ -97,7 +96,7 @@ function New_records() {
                   sx={{ cursor: "pointer" }}
                   onClick={() => openModal(applicant)}
                 >
-                  <TableCell>{applicant.id}</TableCell>
+              
                   <TableCell>{applicant.businessName}</TableCell>
                   <TableCell>{applicant.firstName}</TableCell>
                   <TableCell>{applicant.lastName}</TableCell>
